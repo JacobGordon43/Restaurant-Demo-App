@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/output.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body class="bg-slate-100 h-screen">
+    <nav id="header" class="navbar border-slate-200 bg-transparent absolute lg:relative w-full z-10 top-0">
+
+        <div class="w-full mx-auto flex flex-wrap items-center justify-between mt-0 flex-row-reverse">
+
+
+            <div id="nav-toggle-container" class="block lg:hidden pr-4">
+                <button id="nav-toggle" class="flex flex-col mix-blend-difference items-center px-3 py-2 rounded appearance-none focus:outline-none">
+                    <div id="menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+                </button>
+            </div>
+
+            <div class="transition-all overflow-hidden ease-out duration-500 bg-black right-0 top-0 mix-blend-difference absolute h-0 w-full flex-grow flex-float-right lg:flex lg:items-center lg:h-auto lg:w-auto lg:block lg:mt-0 primary lg:transition-none lg:bg-transparent lg:relative" id="nav-content">
+                <ul class="duration-300 ease-out list-reset lg:flex justify-end flex-1 items-center">
+                    <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
+                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Index">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
+                        <a class="nav-link active inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Projects" asp-action="Index">
+                            Projects
+                        </a>
+                    </li>
+                    <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
+                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Index">
+                            Work History
+                        </a>
+                    </li>
+                    <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
+                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Contact">
+                            Contact Me
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="flex w-full w-screen justify-center align-content-center">
+        <main class="p-6 lg:pt-0" role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        //JQuery to handle changing the color of the nav links
+        function changeNavColor() {
+            if ($(window).width() >= 1024) {
+                $('.nav-link').addClass("primary");
+                $('.nav-link').removeClass("secondary");
+            } else {
+                $('.nav-link').addClass("secondary");
+                $('.nav-link').removeClass("primary");
+            }
+        }
+        //Javascript to toggle the menu
+        document.getElementById('nav-toggle').onclick = function () {
+            document.getElementById("nav-content").classList.toggle("h-screen");
+            document.getElementById('menu').classList.toggle("open");
+            document.getElementByTagName("nav").classList.toggle("navbar")
+        }
+        $(window).on('load', changeNavColor)
+        $(window).on('resize', changeNavColor)
+
+    </script>
+</body>
+</html>

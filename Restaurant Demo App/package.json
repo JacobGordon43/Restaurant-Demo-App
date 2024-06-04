@@ -1,0 +1,14 @@
+{
+  "name": "restaurant-demo-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "css:build": "npx tailwind build ./wwwroot/css/site.css -o ./wwwroot/css/output.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}

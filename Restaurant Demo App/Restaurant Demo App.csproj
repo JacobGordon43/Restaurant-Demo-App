@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Restaurant_Demo_App</RootNamespace>
+  </PropertyGroup>
+
+<ItemGroup>
+    <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
+  </ItemGroup>
+ <ItemGroup>
+   <Folder Include="wwwroot\images\" />
+ </ItemGroup>
+ <ItemGroup>
+   <PackageReference Include="DotNetEnv" Version="3.0.0" />
+   <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
+   <PackageReference Include="MailKit" Version="4.5.0" />
+   <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+ </ItemGroup>
+
+  <Target Name="Tailwind" BeforeTargets="Build">
+    <Exec Command="npm run css:build" />
+  </Target>
+</Project>

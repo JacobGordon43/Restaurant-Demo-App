@@ -1,0 +1,69 @@
+﻿@model Restaurant_Demo_App.Models.HomePageModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <div class="slideshow w-screen max-w-[600px] mx-auto my-4">
+        @foreach (var item in Model.Images)
+        {
+            <figure>
+                <img src=@item.Source alt=@item.Caption />
+                <figcaption class="caption">@item.Caption</figcaption>
+            </figure>
+        }
+    </div>
+    <partial name="_MenuPartial" model=Model.Menu/>
+</div>
+<script>
+    $(".slideshow").slick({
+        dots: true,
+        arrows: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 2500
+    })
+</script>
+@* 
+<div class="flex justify-center flex-col">
+    <div class="slideshow w-[400px]">
+        @foreach (var item in Model)
+        {
+            <figure>
+                <img class="h-80" src=@item.Source alt=@item.Caption />
+                <figcaption class="caption">@item.Caption</figcaption>
+            </figure>
+        }
+    </div>
+    <div class="menu-slide max-[400px]">
+        <div class="menu-category text-xl w-14">Chicken</div>
+        <div class="menu-category text-xl w-14">Beef</div>
+        <div class="menu-category text-xl w-14">Pork</div>
+        <div class="menu-category text-xl w-14">Seafood</div>
+        <div class="menu-category text-xl w-14">Fried Rice</div>
+        <div class="menu-category text-xl w-14">Noodles</div>
+        <div class="menu-category text-xl w-14">Dessert</div>
+        <div class="menu-category text-xl w-14">Drinks</div>
+    </div>
+</div> *@
+
+@* 
+<script type="text/javascript">
+    $(".slideshow").slick({
+        dots: true,
+        arrows: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 2500
+    })
+    $(".menu-slide").slick({
+        arrows: false,
+        infinite: true,
+        slidesToShow: 4
+    })
+</script> *@

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Restaurant_Demo_App.Models.MenuCategoryModel>
+
+<div class="menu-slider text-center">
+    @foreach(var item in Model)
+    {
+        <div>@item.category</div>
+    }
+</div>
+<script>
+    $(".menu-slider").slick({
+        slidesToShow: 5
+        slidesToScroll: 1,
+        infinite: false,
+    });
+</script>
