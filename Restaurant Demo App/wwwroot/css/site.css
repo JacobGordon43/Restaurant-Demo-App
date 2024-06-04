@@ -18,10 +18,22 @@
 .menu-slider{
     width: 90vw;
 }
-.menu-category{
-    font-size: 20px;
-    width: 40px;
+
+.menu-category {
+    padding: 5px;
+    border-right: 3px solid rgba(178, 178, 178, 1);
+    border-bottom: 3px solid rgba(178, 178, 178, 1);
 }
+.menu-category:hover {
+    background: rgba(178, 178, 178, .1);
+}
+.menu-slider .menu-category:first-of-type {
+    borer-left: 3px solid rgba(178, 178, 178, 1);
+}
+
+/*.menu-slider .menu-category:nth-last-of-type(n+2){
+    border-right: none;
+}*/
 
 .slick-prev::before{
     content: '<';
