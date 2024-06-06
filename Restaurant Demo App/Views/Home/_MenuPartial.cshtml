@@ -3,13 +3,42 @@
 <div class="menu-slider text-center mx-auto">
     @foreach(var item in Model)
     {
-        <div class="menu-category text-xl">@item.category</div>
+        <div class="flex flex-col">
+            <div class="menu-category text-xl">@item.category</div>
+            <div class="menu-container flex flex-col">
+                @foreach(var menuItem in item.items)
+                {
+                    <div class="menu-item flex flex-row w-full">
+                        <div class="item-name">@menuItem.name</div>
+                        <div class="item-name">@menuItem.description</div>
+                        <div class="item-name">@menuItem.calories</div>
+                        <div class="item-name">@(@menuItem.peanuts ? "Includes Peanuts" : "")</div>
+                        <div class="item-name">@menuItem.price</div>
+                    </div>
+                }
+            </div>
+        </div>
     }
 </div>
 <script>
+    if (@Model.Count() > 7) {
+        var desktopSlidesToShow = 7
+    } else {
+        var desktopSlidesToShow = @Model.Count()
+        }
     $(".menu-slider").slick({
-        slidesToShow: 5,
+        slidesToShow: (@Model.Count()  > 3 ? 3 : @Model.Count()) ,
         slidesToScroll: 1,
         infinite: false,
+        mobileFirst: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: (@Model.Count()  > 5 ? 5 : @Model.Count()),
+                }
+            }
+        ]
     });
+
 </script>
