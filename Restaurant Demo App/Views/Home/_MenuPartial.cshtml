@@ -4,7 +4,7 @@
     @foreach(var item in Model)
     {
         <div class="flex flex-col">
-            <div class="menu-category text-xl">@item.category</div>
+            <div class="menu-category text-xl" onclick="selectCategory('@item.category')">@item.category</div>
             <div class="menu-container flex flex-col">
                 @foreach(var menuItem in item.items)
                 {
@@ -41,4 +41,17 @@
         ]
     });
 
+    function selectCategory(category) {
+        $(."menu-container").html(
+            @foreach(var menuItem in Model[category].items){
+                <div class="menu-item flex flex-row w-full">
+                    <div class="item-name">@menuItem.name</div>
+                    <div class="item-name">@menuItem.description</div>
+                    <div class="item-name">@menuItem.calories</div>
+                    <div class="item-name">@(@menuItem.peanuts ? "Includes Peanuts" : "")</div>
+                    <div class="item-name">@menuItem.price</div>
+                </div>
+            }
+        )
+    }
 </script>
