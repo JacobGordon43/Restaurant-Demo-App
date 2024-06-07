@@ -25,6 +25,11 @@
     border-bottom: 3px solid rgba(178, 178, 178, 1);
     cursor: pointer;
 }
+.active-menu{
+    display: flex;
+    width:90vw;
+    flex-direction: row;
+}
 .menu-category:hover {
     background: rgba(178, 178, 178, .1);
 }
