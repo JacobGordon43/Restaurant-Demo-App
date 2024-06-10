@@ -25,10 +25,13 @@
     border-bottom: 3px solid rgba(178, 178, 178, 1);
     cursor: pointer;
 }
+.item-col{
+    padding: 10px;
+}
 .active-menu{
     display: flex;
     width:90vw;
-    flex-direction: row;
+    flex-direction: column;
 }
 .menu-category:hover {
     background: rgba(178, 178, 178, .1);

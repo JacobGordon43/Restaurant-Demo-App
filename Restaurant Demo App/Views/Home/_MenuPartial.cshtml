@@ -5,23 +5,26 @@
     {
         <div class="flex flex-col">
             <div class="menu-category text-xl" onclick="selectCategory('@item.category')">@item.category</div>
-            <div id="@item-category" class="menu-container hidden">
-                
-                @foreach(var menuItem in item.items)
-                //TODO hide all of this and use an active class to display it at 90vw. Use the category as a class to help in setting it to active
-                {
-                    <div class="menu-item flex flex-row w-full">
-                        <div class="item-name">@menuItem.name</div>
-                        <div class="item-name">@menuItem.description</div>
-                        <div class="item-name">@menuItem.calories</div>
-                        <div class="item-name">@(@menuItem.peanuts ? "Includes Peanuts" : "")</div>
-                        <div class="item-name">@menuItem.price</div>
-                    </div>
-                }
-            </div>
         </div>
     }
 </div>
+@foreach(var item in Model){
+    <div id="@item.category-category" class="menu-container hidden">
+
+        @foreach (var menuItem in item.items)
+        //TODO hide all of this and use an active class to display it at 90vw. Use the category as a class to help in setting it to active
+        {
+            <div class="menu-item flex flex-row w-full">
+                <div class="item-col">@menuItem.name</div>
+                <div class="item-col">@menuItem.description</div>
+                <div class="item-col">@menuItem.calories</div>
+                <div class="item-col">@(@menuItem.peanuts ? "Includes Peanuts" : "")</div>
+                <div class="item-col">@menuItem.price</div>
+            </div>
+        }
+    </div>
+}
+
 <script>
     if (@Model.Count() > 7) {
         var desktopSlidesToShow = 7
@@ -44,7 +47,7 @@
     });
 
     function selectCategory(category) {
-        document.getElementsByClassName("Active").classList.toggleClass("Active");
-        document.getElementsById(category + "-category").classList.toggle("Active");
+        $('.active-menu').removeClass("active-menu");
+        $("#" + category + "-category").addClass("active-menu");
     }
 </script>
