@@ -5,10 +5,10 @@
         public string name;
         public string description { get; set; }
         public float price;
-        public int calories { get; set;}
-        public bool peanuts { get; set;}
-        public bool gluten { get; set;}
-        public bool vegan { get; set;}
+        public int calories { get; set; }
+        public bool peanuts { get; set; }
+        public bool gluten { get; set; }
+        public bool vegan { get; set; }
 
         public MenuItemModel(string name, string description, float price, int calories, bool peanuts, bool gluten, bool vegan)
         {
