@@ -2,13 +2,13 @@
 {
     public class MenuCategoryModel
     {
-        public string category { get; set; }
-        public List<MenuItemModel> items { get; set; }
+        public string Category { get; set; }
+        public List<MenuItemModel> Items { get; set; }
 
         public MenuCategoryModel(string category, List<MenuItemModel> items)
         {
-            this.category = category;
-            this.items = items;
+            Category = category;
+            Items = items;
         }
     }
 }

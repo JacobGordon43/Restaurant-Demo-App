@@ -4,12 +4,12 @@
     @foreach(var item in Model)
     {
         <div class="flex flex-col">
-            <div class="menu-category text-xl" onclick="selectCategory('@item.category')">@item.category</div>
+            <div class="menu-category text-xl" onclick="selectCategory('@item.Category')">@item.Category</div>
         </div>
     }
 </div>
 @foreach(var item in Model){
-    <div id="@item.category-category" class="menu-container hidden mx-auto">
+    <div id="@item.Category-category" class="menu-container hidden mx-auto">
         <div class="menu-item hidden lg:flex flex-row w-full">
             <div class="item-col w-[100px]">Dish</div>
             <div class="item-col w-[300px] lg:w-[600px]">Description</div>
@@ -19,7 +19,7 @@
             <div class="item-col w-[100px]">Vegan</div>
             <div class="item-col w-[100px]">Price</div>
         </div>
-        @foreach (var menuItem in item.items)
+        @foreach (var menuItem in item.Items)
         //TODO hide all of this and use an active class to display it at 90vw. Use the category as a class to help in setting it to active
         {    
             <div class="menu-item flex flex-col lg:flex-row w-full mx-auto">

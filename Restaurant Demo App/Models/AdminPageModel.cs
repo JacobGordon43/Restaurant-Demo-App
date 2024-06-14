@@ -2,10 +2,10 @@
 {
     public class AdminPageModel
     {
-        public List<MenuItemModel> Menu { get; set; }
+        public List<MenuCategoryModel> Menu { get; set; }
         public List<AboutContentModel> AboutContent { get; set; }
 
-        public AdminPageModel(List<MenuItemModel> menu, List<AboutContentModel> aboutContent)
+        public AdminPageModel(List<MenuCategoryModel> menu, List<AboutContentModel> aboutContent)
         {
             Menu = menu;
             AboutContent = aboutContent;

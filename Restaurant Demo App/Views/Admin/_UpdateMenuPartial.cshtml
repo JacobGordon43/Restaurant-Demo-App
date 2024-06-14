@@ -1,41 +1,43 @@
-﻿@model Restaurant_Demo_App.Models.MenuModel
+﻿@model IEnumerable<Restaurant_Demo_App.Models.MenuCategoryModel>
 <div>
     <div class="menu-slider text-center mx-auto">
-        @foreach (var item in Model.Categories)
+        @foreach (var item in Model)
         {
             <div class="flex flex-col">
-                <div class="menu-category text-xl" onclick="selectCategory('@item.category')">@item.category</div>
+                <div class="menu-category text-xl" onclick="selectCategory('@item.Category')">@item.Category</div>
             </div>
         }
     </div>
-    @foreach (var MenuList in Model.MenuItems)
+    @foreach (var item in Model)
     {
-        foreach(var item in MenuList)
+        <form id="@item.Category-category" class="hidden ">
+        @foreach(var menuItem in item.Items)
         {
-            <form>
+            <div class="category-container flex my-4 flex-col">
                 <label>Name</label>
-                <input value="@item.name" />
+                <input value="@menuItem.name" />
                 <label>Description</label>
-                <input value="@item.description" />                
+                <input value="@menuItem.description" />                
                 <label>Calories</label>
-                <input value="@item.calories" />                
+                <input value="@menuItem.calories" />                
                 <label>Price</label>
-                <input value="@item.price" />
-            </form>
+                <input value="@menuItem.price" />
+            </div>
+                <hr class="m-2"/>
         }
-        <hr />
+        </form>
     
     }
 
     <script>
 
-        if (@Model.Categories.Count() > 7) {
+        if (@Model.Count() > 7) {
             var desktopSlidesToShow = 7
         } else {
-            var desktopSlidesToShow = @Model.Categories.Count()
+            var desktopSlidesToShow = @Model.Count()
                 }
         $(".menu-slider").slick({
-            slidesToShow: (@Model.Categories.Count()  > 3 ? 3 : @Model.Categories.Count()),
+            slidesToShow: (@Model.Count()  > 3 ? 3 : @Model.Count()),
             slidesToScroll: 1,
             infinite: false,
             mobileFirst: true,
@@ -43,7 +45,7 @@
                 {
                     breakpoint: 1024,
                     settings: {
-                        slidesToShow: (@Model.Categories.Count()  > 5 ? 5 : @Model.Categories.Count()),
+                        slidesToShow: (@Model.Count()  > 5 ? 5 : @Model.Count()),
                     }
                 }
             ]

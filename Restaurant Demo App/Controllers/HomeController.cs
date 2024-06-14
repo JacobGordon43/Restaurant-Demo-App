@@ -50,8 +50,8 @@ namespace Restaurant_Demo_App.Controllers
                         Debug.WriteLine(menuCategoriesJson.ToString());
                         Debug.WriteLine(menuCategoryJson.ToString());
                         MenuCategoryModel category = JsonConvert.DeserializeObject<MenuCategoryModel>(menuCategoryJson.ToString());
-                        Debug.WriteLine("The category is " + category.category);
-                        foreach(MenuItemModel item in category.items)
+                        Debug.WriteLine("The category is " + category.Category);
+                        foreach(MenuItemModel item in category.Items)
                         {
                             Debug.WriteLine(item.price);
                         }
