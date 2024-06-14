@@ -1,0 +1,57 @@
+﻿@model Restaurant_Demo_App.Models.MenuModel
+<div>
+    <div class="menu-slider text-center mx-auto">
+        @foreach (var item in Model.Categories)
+        {
+            <div class="flex flex-col">
+                <div class="menu-category text-xl" onclick="selectCategory('@item.category')">@item.category</div>
+            </div>
+        }
+    </div>
+    @foreach (var MenuList in Model.MenuItems)
+    {
+        foreach(var item in MenuList)
+        {
+            <form>
+                <label>Name</label>
+                <input value="@item.name" />
+                <label>Description</label>
+                <input value="@item.description" />                
+                <label>Calories</label>
+                <input value="@item.calories" />                
+                <label>Price</label>
+                <input value="@item.price" />
+            </form>
+        }
+        <hr />
+    
+    }
+
+    <script>
+
+        if (@Model.Categories.Count() > 7) {
+            var desktopSlidesToShow = 7
+        } else {
+            var desktopSlidesToShow = @Model.Categories.Count()
+                }
+        $(".menu-slider").slick({
+            slidesToShow: (@Model.Categories.Count()  > 3 ? 3 : @Model.Categories.Count()),
+            slidesToScroll: 1,
+            infinite: false,
+            mobileFirst: true,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: (@Model.Categories.Count()  > 5 ? 5 : @Model.Categories.Count()),
+                    }
+                }
+            ]
+        });
+
+        function selectCategory(category) {
+            $('.active-menu').removeClass("active-menu");
+            $("#" + category + "-category").addClass("active-menu");
+        }
+    </script>
+</div>

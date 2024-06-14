@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <div>Menu</div>
+    <div>About</div>
+</div>
+<div class="content-container">
+    <partial name="_UpdateMenuPartial" class="w-screen"/>
+</div>
+
+<script>
+    function selectContent() {
+        $('.active-menu').removeClass("active-menu");
+        $("#" + category).addClass("active-menu");
+    }
+</script>
