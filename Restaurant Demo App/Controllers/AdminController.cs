@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Restaurant_Demo_App.Models;
 using System.Diagnostics;
-
+using System.IO;
 namespace Restaurant_Demo_App.Controllers
 {
     [Route("/SecretPath")]
@@ -31,7 +31,7 @@ namespace Restaurant_Demo_App.Controllers
                         Debug.WriteLine("The category is " + category.Category);
                         foreach (MenuItemModel item in category.Items)
                         {
-                            Debug.WriteLine(item.price);
+                            Debug.WriteLine(item.Price);
                         }
                         Menu.Add(category);
                     }
@@ -43,6 +43,26 @@ namespace Restaurant_Demo_App.Controllers
             }
             AdminPageModel adminModel = new AdminPageModel(Menu, AboutContent);
             return View(adminModel);
+        }
+        public ActionResult UpdateMenu(List<MenuCategoryModel> menu)
+        {
+            string rootDir = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
+            Debug.WriteLine(rootDir);
+            try
+            {
+                string menuCategoriesJson = JsonConvert.SerializeObject(menu);
+                System.IO.File.WriteAllText(rootDir + "//wwwroot//json//menu.json", menuCategoriesJson);
+                TempData["Success"] = "The Menu has been saved successfully!";
+                TempData["Failure"] = null;
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e);
+                TempData["Failure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["Success"] = null;
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

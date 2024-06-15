@@ -23,31 +23,31 @@
         //TODO hide all of this and use an active class to display it at 90vw. Use the category as a class to help in setting it to active
         {    
             <div class="menu-item flex flex-col lg:flex-row w-full mx-auto">
-                <div class="item-col w-full lg:w-[100px]">@menuItem.name</div>
-                <div class="item-col w-full lg:w-[600px]">@menuItem.description</div>
-                <div class="item-col w-full lg:w-[100px]">@menuItem.calories</div>
+                <div class="item-col w-full lg:w-[100px]">@menuItem.Name</div>
+                <div class="item-col w-full lg:w-[600px]">@menuItem.Description</div>
+                <div class="item-col w-full lg:w-[100px]">@menuItem.Calories</div>
                 <div class="icons-row flex flex-row">
                     <div class="item-col w-full lg:w-[100px]">
-                    @if (@menuItem.peanuts)
+                    @if (@menuItem.Peanuts)
                     {
                         <img class="w-[40px] mx-auto" src="images/peanut.png" />
                     }
                     </div>
                     <div class="item-col w-full lg:w-[100px]">
-                    @if (@menuItem.gluten)
+                    @if (@menuItem.Gluten)
                     {
                         <img class="w-[40px] mx-auto" src="images/glutenfree.png" />
                     }
                     </div>
                     <div class="item-col w-full lg:w-[100px]">
-                        @if (@menuItem.vegan)
+                        @if (@menuItem.Vegan)
                         {
                             <img class="w-[40px] mx-auto" src="images/vegan.png" />
                         }
 
                     </div>
                 </div>
-                <div class="item-col w-full lg:w-[100px]">$@menuItem.price</div>
+                <div class="item-col w-full lg:w-[100px]">$@menuItem.Price</div>
             </div>
             <hr />
         }

@@ -8,27 +8,27 @@
             </div>
         }
     </div>
+    @if(TempData["Success"] != null)
+    {
+        <div class="message-box bg-green-300 mx-auto">@TempData["Success"]</div>
+    }else if(TempData["Failure"] != null)
+    {
+        <div class="message-box bg-red-300 mx-auto">@TempData["Failure"]</div>
+    }
+    <form asp-action="UpdateMenu" class="w-full flex justify-center flex-col">
+
     @foreach (var item in Model)
     {
-        <form id="@item.Category-category" class="hidden ">
-        @foreach(var menuItem in item.Items)
-        {
-            <div class="category-container flex my-4 flex-col">
-                <label>Name</label>
-                <input value="@menuItem.name" />
-                <label>Description</label>
-                <input value="@menuItem.description" />                
-                <label>Calories</label>
-                <input value="@menuItem.calories" />                
-                <label>Price</label>
-                <input value="@menuItem.price" />
-            </div>
-                <hr class="m-2"/>
-        }
-        </form>
-    
+        <div id="@item.Category-category" class="hidden ">
+            @foreach(var menuItem in item.Items)
+            {
+                <partial name="_MenuItemFormPartial" model=@menuItem/>
+            }
+        </div>    
     }
-
+    <input type="submit" value="Save Menu" class="submit-btn mx-auto bg-green-400 hover:bg-green-500"/>
+    </form>
+</div>
     <script>
 
         if (@Model.Count() > 7) {
@@ -56,4 +56,3 @@
             $("#" + category + "-category").addClass("active-menu");
         }
     </script>
-</div>

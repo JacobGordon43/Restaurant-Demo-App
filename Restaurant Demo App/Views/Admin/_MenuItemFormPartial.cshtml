@@ -1,0 +1,45 @@
+﻿@model Restaurant_Demo_App.Models.MenuItemModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="category-container flex mb-4 flex-col">
+    <div class="field-container">
+        <label asp-for="Name">Name</label>
+        <input asp-for="@Model.Name" value="@Model.Name" class="menu-item-input" />
+        <span asp-validation-for="@Model.Name" class="bg-red-300"></span>
+    </div>
+    <div class="field-container">
+        <label asp-for="@Model.Description">Description</label>
+        <input asp-for="@Model.Description" value="@Model.Description" class="menu-item-input" />
+        <span asp-validation-for="@Model.Description" class="bg-red-300"></span>
+    </div>
+    <div class="field-container">
+        <label asp-for="@Model.Calories">Calories</label>
+        <input asp-for="@Model.Calories" value="@Model.Calories" class="menu-item-input" />
+        <span asp-validation-for="@Model.Calories" class="bg-red-300"></span>
+
+    </div>
+    <div class="field-container">
+        <label asp-for="@Model.Price">Price</label>
+        <input asp-for="@Model.Price" value="@Model.Price" class="menu-item-input" />
+        <span asp-validation-for="@Model.Price" class="bg-red-300"></span>
+
+    </div>
+    <div class="flex flex-col w-full">
+        <label>
+            <input class="form-check-input" asp-for="Peanuts" /> @Html.DisplayNameFor(model => model.Vegan)
+        </label>
+    </div>
+    <div class="flex flex-col w-full">
+        <label>
+            <input class="form-check-input" asp-for="Gluten" /> @Html.DisplayNameFor(model => model.Gluten)
+        </label>
+    </div>        
+    <div class="flex flex-col w-full">
+        <label>
+            <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
+        </label>
+    </div>
+</div>
+<hr class="m-2" />
+    
