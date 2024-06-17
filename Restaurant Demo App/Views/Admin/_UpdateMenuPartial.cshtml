@@ -15,7 +15,6 @@
     {
         <div class="message-box bg-red-300 mx-auto">@TempData["Failure"]</div>
     }
-    <form asp-action="UpdateMenu" class="w-full flex justify-center flex-col">
 
     @foreach (var item in Model)
     {
@@ -26,8 +25,6 @@
             }
         </div>    
     }
-    <input type="submit" value="Save Menu" class="submit-btn mx-auto bg-green-400 hover:bg-green-500"/>
-    </form>
 </div>
     <script>
 

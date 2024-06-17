@@ -5,12 +5,16 @@ namespace Restaurant_Demo_App.Models
     public class MenuItemModel
     {
         [Required]
-        public string Name;
+        public string Id;
+        [Required]
+        public string Category;
+        [Required]
+        public string Name { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]
         [DataType(DataType.Currency)]
-        public float Price;
+        public float Price { get; set; }
         [Required]
         public int Calories { get; set; }
         [Required]
@@ -20,8 +24,10 @@ namespace Restaurant_Demo_App.Models
         [Required]
         public bool Vegan { get; set; }
 
-        public MenuItemModel(string name, string description, float price, int calories, bool peanuts, bool gluten, bool vegan)
+        public MenuItemModel(string id, string category, string name, string description, float price, int calories, bool peanuts, bool gluten, bool vegan)
         {
+            Id = id;
+            Category = category;
             Name = name;
             Description = description;
             Price = price;
@@ -30,5 +36,6 @@ namespace Restaurant_Demo_App.Models
             Gluten = gluten;
             Vegan = vegan;
         }
+        public MenuItemModel() { }
     }
 }

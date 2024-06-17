@@ -5,17 +5,21 @@ using Newtonsoft.Json;
 using Restaurant_Demo_App.Models;
 using System.Diagnostics;
 using System.IO;
+using Humanizer.Localisation.DateToOrdinalWords;
 namespace Restaurant_Demo_App.Controllers
 {
     [Route("/SecretPath")]
     public class AdminController : Controller
     {
-        // GET: AdminController
-        [HttpGet("Home")]
+        private static List<MenuCategoryModel> Menu;
+
+
+            // GET: AdminController
+            [HttpGet("Dashboard")]
         public ActionResult Index()
         {
-            List<MenuCategoryModel> Menu = new List<MenuCategoryModel>();
-            List<AboutContentModel> AboutContent = new List<AboutContentModel>();
+
+            List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
             try
             {
                 using (StreamReader r = new StreamReader("wwwroot/json/menu.json"))
@@ -29,11 +33,8 @@ namespace Restaurant_Demo_App.Controllers
                         Debug.WriteLine(menuCategoryJson.ToString());
                         MenuCategoryModel category = JsonConvert.DeserializeObject<MenuCategoryModel>(menuCategoryJson.ToString());
                         Debug.WriteLine("The category is " + category.Category);
-                        foreach (MenuItemModel item in category.Items)
-                        {
-                            Debug.WriteLine(item.Price);
-                        }
-                        Menu.Add(category);
+                        categories.Add(category);
+                        Menu = categories;
                     }
                 }
             }
@@ -41,17 +42,47 @@ namespace Restaurant_Demo_App.Controllers
             {
                 Debug.WriteLine(ex);
             }
-            AdminPageModel adminModel = new AdminPageModel(Menu, AboutContent);
+            
+            List<AboutContentModel> AboutContent = new List<AboutContentModel>();
+
+            AdminPageModel adminModel = new AdminPageModel(categories, AboutContent);
             return View(adminModel);
         }
-        public ActionResult UpdateMenu(List<MenuCategoryModel> menu)
+        public IActionResult UpdateMenu(MenuItemModel item)
         {
-            string rootDir = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
+            string rootDir = @Directory.GetCurrentDirectory().ToString();
+            string filePath = Path.Combine(rootDir, "/root/json/menu.json");
             Debug.WriteLine(rootDir);
             try
             {
-                string menuCategoriesJson = JsonConvert.SerializeObject(menu);
-                System.IO.File.WriteAllText(rootDir + "//wwwroot//json//menu.json", menuCategoriesJson);
+                foreach(MenuCategoryModel category in Menu)
+                {
+                    if (category.Category == item.Category)
+                    {
+                        category.Items.ForEach(dish =>
+                        {
+                            if (dish.Id == item.Id)
+                            {
+                                dish = item;
+                            }
+                        });
+                    }
+                }
+                string menuCategoriesJson = "";
+                int count = 0;
+                foreach (MenuCategoryModel category in Menu)
+                {
+
+                    string json = JsonConvert.SerializeObject(category);
+                    menuCategoriesJson += category.Category + ":" + json;
+                    if(count < Menu.Count() - 1)
+                    {
+                        menuCategoriesJson += ",";
+                    }
+                    count++;
+                }
+                
+                System.IO.File.WriteAllText(rootDir + "/wwwroot/json/menu.json", "{'Menu':{" + menuCategoriesJson + "}}");
                 TempData["Success"] = "The Menu has been saved successfully!";
                 TempData["Failure"] = null;
             }

@@ -10,5 +10,6 @@
             Category = category;
             Items = items;
         }
+        public MenuCategoryModel() { }
     }
 }

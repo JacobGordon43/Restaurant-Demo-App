@@ -9,14 +9,45 @@ namespace Restaurant_Demo_App.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        private static List<MenuCategoryModel> Menu;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        public void SetMenuCategories()
+        {
+            if(Menu == null)
+            {
+                List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
+                try
+                {
+                    using (StreamReader r = new StreamReader("wwwroot/json/menu.json"))
+                    {
+                        string menuCategories = r.ReadToEnd();
+                        JObject menuCategoriesJson = JObject.Parse(menuCategories);
+                        Debug.WriteLine(menuCategoriesJson.ToString());
+                        foreach (JObject menuCategoryJson in menuCategoriesJson["Menu"].Values())
+                        {
+                            Debug.WriteLine(menuCategoriesJson.ToString());
+                            Debug.WriteLine(menuCategoryJson.ToString());
+                            MenuCategoryModel category = JsonConvert.DeserializeObject<MenuCategoryModel>(menuCategoryJson.ToString());
+                            Debug.WriteLine("The category is " + category.Category);
+                            categories.Add(category);
+                            Menu = categories;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+            }
+        }
+
         public IActionResult Index()
         {
+           SetMenuCategories();
            List<ImageModel> images = new List<ImageModel>();
            List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
             try
@@ -38,7 +69,7 @@ namespace Restaurant_Demo_App.Controllers
                 Debug.WriteLine(ex);
             }
 
-            try
+            /*try
             {
                 using (StreamReader r = new StreamReader("wwwroot/json/menu.json"))
                 {
@@ -62,8 +93,8 @@ namespace Restaurant_Demo_App.Controllers
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-            }
-            HomePageModel lists = new HomePageModel(categories, images);
+            }*/
+            HomePageModel lists = new HomePageModel(Menu, images);
             return View(lists);
         }
 

@@ -1,45 +1,65 @@
 ﻿@model Restaurant_Demo_App.Models.MenuItemModel
 
-<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form id="@Model.Name-form" asp-action="UpdateMenu">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="category-container flex mb-4 flex-col">
+        <div class="field-container">
+            <label asp-for="Id">Id</label>
+            <input id="@Model.Name-id" disabled asp-for="Id" value="@Model.Id" class="menu-item-input" />
+            <span asp-validation-for="Id" class="bg-red-300"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Category">Category</label>
+            <input id="@Model.Name-category" disabled asp-for="Category" value="@Model.Category" class="menu-item-input" />
+            <span asp-validation-for="Category" class="bg-red-300"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name" value="@Model.Name" class="menu-item-input" />
+            <span asp-validation-for="Name" class="bg-red-300"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Description">Description</label>
+            <input asp-for="Description" value="@Model.Description" class="menu-item-input" />
+            <span asp-validation-for="Description" class="bg-red-300"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Calories">Calories</label>
+            <input asp-for="Calories" value="@Model.Calories" class="menu-item-input" />
+            <span asp-validation-for="Calories" class="bg-red-300"></span>
 
-<div class="category-container flex mb-4 flex-col">
-    <div class="field-container">
-        <label asp-for="Name">Name</label>
-        <input asp-for="@Model.Name" value="@Model.Name" class="menu-item-input" />
-        <span asp-validation-for="@Model.Name" class="bg-red-300"></span>
-    </div>
-    <div class="field-container">
-        <label asp-for="@Model.Description">Description</label>
-        <input asp-for="@Model.Description" value="@Model.Description" class="menu-item-input" />
-        <span asp-validation-for="@Model.Description" class="bg-red-300"></span>
-    </div>
-    <div class="field-container">
-        <label asp-for="@Model.Calories">Calories</label>
-        <input asp-for="@Model.Calories" value="@Model.Calories" class="menu-item-input" />
-        <span asp-validation-for="@Model.Calories" class="bg-red-300"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Price">Price</label>
+            <input asp-for="Price" value="@Model.Price" class="menu-item-input" />
+            <span asp-validation-for="Price" class="bg-red-300"></span>
 
+        </div>
+        <div class="flex flex-col w-full">
+            <label>
+                <input class="form-check-input" asp-for="Peanuts" /> @Html.DisplayNameFor(model => model.Vegan)
+            </label>
+        </div>
+        <div class="flex flex-col w-full">
+            <label>
+                <input class="form-check-input" asp-for="Gluten" /> @Html.DisplayNameFor(model => model.Gluten)
+            </label>
+        </div>        
+        <div class="flex flex-col w-full">
+            <label>
+                <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
+            </label>
+        </div>
+        <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500" onclick="enableInputs">Save Item</button>
     </div>
-    <div class="field-container">
-        <label asp-for="@Model.Price">Price</label>
-        <input asp-for="@Model.Price" value="@Model.Price" class="menu-item-input" />
-        <span asp-validation-for="@Model.Price" class="bg-red-300"></span>
-
-    </div>
-    <div class="flex flex-col w-full">
-        <label>
-            <input class="form-check-input" asp-for="Peanuts" /> @Html.DisplayNameFor(model => model.Vegan)
-        </label>
-    </div>
-    <div class="flex flex-col w-full">
-        <label>
-            <input class="form-check-input" asp-for="Gluten" /> @Html.DisplayNameFor(model => model.Gluten)
-        </label>
-    </div>        
-    <div class="flex flex-col w-full">
-        <label>
-            <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
-        </label>
-    </div>
-</div>
+</form>
 <hr class="m-2" />
     
+<script>
+    function enableInputs() {
+        console.log("Submitted")
+        $("#@Model.Name-id").prop("disabled", false);
+        $("#@Model.Name-category").prop("disabled", false);
+    }
+
+</script>
