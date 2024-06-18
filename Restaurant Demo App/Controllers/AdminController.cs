@@ -63,7 +63,7 @@ namespace Restaurant_Demo_App.Controllers
                         {
                             if (dish.Id == item.Id)
                             {
-                                dish = item;
+                                dish.ChangeItem(item.Name, item.Description, item.Price, item.Calories, item.Peanuts, item.Gluten, item.Vegan);
                             }
                         });
                     }
@@ -95,5 +95,52 @@ namespace Restaurant_Demo_App.Controllers
 
             return RedirectToAction("Index");
         }
+        public IActionResult DeleteItem(MenuItemModel item)
+        {
+            string rootDir = @Directory.GetCurrentDirectory().ToString();
+            string filePath = Path.Combine(rootDir, "/root/json/menu.json");
+            Debug.WriteLine(rootDir);
+            try
+            {
+                foreach (MenuCategoryModel category in Menu)
+                {
+                    if (category.Category == item.Category)
+                    {
+                        for(int i = 0; i < category.Items.Count(); i++)
+                        {
+                            if (category.Items[i].Id == item.Id)
+                            {
+                                category.Items.RemoveAt(i);
+                            }
+                        }
+                    }
+                }
+                string menuCategoriesJson = "";
+                int count = 0;
+                foreach (MenuCategoryModel category in Menu)
+                {
+
+                    string json = JsonConvert.SerializeObject(category);
+                    menuCategoriesJson += category.Category + ":" + json;
+                    if (count < Menu.Count() - 1)
+                    {
+                        menuCategoriesJson += ",";
+                    }
+                    count++;
+                }
+
+                System.IO.File.WriteAllText(rootDir + "/wwwroot/json/menu.json", "{'Menu':{" + menuCategoriesJson + "}}");
+                TempData["Success"] = "The Menu has been saved successfully!";
+                TempData["Failure"] = null;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                TempData["Failure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["Success"] = null;
+            }
+
+            return RedirectToAction("Index");
+        }    
     }
 }

@@ -4,13 +4,13 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="category-container flex mb-4 flex-col">
         <div class="field-container">
-            <label asp-for="Id">Id</label>
-            <input id="@Model.Name-id" disabled asp-for="Id" value="@Model.Id" class="menu-item-input" />
+            <label asp-for="Id" class="hidden">Id</label>
+            <input  asp-for="Id" value="@Model.Id" class="menu-item-input hidden" />
             <span asp-validation-for="Id" class="bg-red-300"></span>
         </div>
         <div class="field-container">
-            <label asp-for="Category">Category</label>
-            <input id="@Model.Name-category" disabled asp-for="Category" value="@Model.Category" class="menu-item-input" />
+            <label asp-for="Category" class="hidden">Category</label>
+            <input asp-for="Category" value="@Model.Category" class="menu-item-input hidden" />
             <span asp-validation-for="Category" class="bg-red-300"></span>
         </div>
         <div class="field-container">
@@ -50,7 +50,11 @@
                 <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
             </label>
         </div>
-        <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500" onclick="enableInputs">Save Item</button>
+        <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500">Save Item</button>
+        @Html.ActionLink("Delete", "DeleteItem")
+@*         <input type="button" title="Delete" value="D" onclick="location.href='@Url.Action("Delete", "movies", new { id = item.ID })'" /> *@
+@*         <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500" onclick="location.href='@Url.Action("d>Delete Item</button> *@
+
     </div>
 </form>
 <hr class="m-2" />

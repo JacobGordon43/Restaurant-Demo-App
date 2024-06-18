@@ -5,9 +5,9 @@ namespace Restaurant_Demo_App.Models
     public class MenuItemModel
     {
         [Required]
-        public string Id;
+        public string Id { get; set; }
         [Required]
-        public string Category;
+        public string Category {get; set;}
         [Required]
         public string Name { get; set; }
         [Required]
@@ -37,5 +37,16 @@ namespace Restaurant_Demo_App.Models
             Vegan = vegan;
         }
         public MenuItemModel() { }
+
+        public void ChangeItem(string name, string description, float price, int calories, bool peanuts, bool gluten, bool vegan)
+        {
+            Name = name;
+            Description = description;
+            Price = price;
+            Calories = calories;
+            Peanuts = peanuts;
+            Gluten = gluten;
+            Vegan = vegan;
+        }
     }
 }
