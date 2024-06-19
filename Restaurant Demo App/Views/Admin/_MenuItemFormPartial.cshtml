@@ -33,37 +33,28 @@
             <label asp-for="Price">Price</label>
             <input asp-for="Price" value="@Model.Price" class="menu-item-input" />
             <span asp-validation-for="Price" class="bg-red-300"></span>
-
         </div>
-        <div class="flex flex-col w-full">
-            <label>
-                <input class="form-check-input" asp-for="Peanuts" /> @Html.DisplayNameFor(model => model.Vegan)
-            </label>
+        <div class="flex flex-row">
+            <div class="flex flex-col w-full">
+                <label class="mx-auto my-4">
+                    <input class="form-check-input" asp-for="Peanuts" /> @Html.DisplayNameFor(model => model.Peanuts)
+                </label>
+            </div>
+            <div class="flex flex-col w-full">
+                <label class="mx-auto my-4">
+                    <input class="form-check-input" asp-for="Gluten" /> @Html.DisplayNameFor(model => model.Gluten)
+                </label>
+            </div>
+            <div class="flex flex-col w-full">
+                <label class="mx-auto my-4">
+                    <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
+                </label>
+            </div>
         </div>
-        <div class="flex flex-col w-full">
-            <label>
-                <input class="form-check-input" asp-for="Gluten" /> @Html.DisplayNameFor(model => model.Gluten)
-            </label>
-        </div>        
-        <div class="flex flex-col w-full">
-            <label>
-                <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
-            </label>
+        <div class="flex flex-row gap-2">
+            <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Save Item</button>
+            <button asp-action="DeleteItem" class="btn mx-auto bg-red-400 hover:bg-red-500">Delete</button>
         </div>
-        <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500">Save Item</button>
-        <button asp-action="DeleteItem" class="submit-btn mx-auto bg-red-400 hover:bg-red-500">Delete</button>
-        @*         <input type="button" title="Delete" value="D" onclick="location.href='@Url.Action("Delete", "movies", new { id = item.ID })'" /> *@
-@*         <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500" onclick="location.href='@Url.Action("d>Delete Item</button> *@
-
     </div>
 </form>
 <hr class="m-2" />
-    
-<script>
-    function enableInputs() {
-        console.log("Submitted")
-        $("#@Model.Name-id").prop("disabled", false);
-        $("#@Model.Name-category").prop("disabled", false);
-    }
-
-</script>

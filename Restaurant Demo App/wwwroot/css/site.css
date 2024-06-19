@@ -120,18 +120,19 @@
     padding: 10px;
     max-width: 450px;
 }
-.submit-btn {
-    width: 100px;
+.btn {
+    min-width: 100px;
     padding: 10px;
     border: 3px inset black;
 }
-.submit-btn:hover{
+.btn:hover{
     cursor: pointer;
 }
 /*Hamburger menu animation styles obtained from https://codepen.io/designcouch/pen/ExvwPY*/
 #menu {
-    width: 60px;
-    height: 45px;
+    margin-bottom: 20px;
+    width: 30px;
+    height: 30px;
     position: relative;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
@@ -147,7 +148,7 @@
 #menu span {
 display: block;
 position: absolute;
-height: 5px;
+height: 3px;
 width: 100%;
 background: #14213D;
 border-radius: 9px;
@@ -168,15 +169,15 @@ transition: .25s ease-in-out;
 }
 
 #menu span:nth-child(2), #menu span:nth-child(3) {
-    top: 18px;
+    top: 10px;
 }
 
 #menu span:nth-child(4) {
-    top: 36px;
+    top: 20px;
 }
 
 #menu.open span:nth-child(1) {
-    top: 18px;
+    top: 10px;
     width: 0%;
     left: 50%;
 }
@@ -198,7 +199,7 @@ transition: .25s ease-in-out;
 }
 
 #menu.open span:nth-child(4) {
-    top: 18px;
+    top: 10px;
     width: 0%;
     left: 50%;
 }

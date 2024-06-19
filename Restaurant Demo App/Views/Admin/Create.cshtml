@@ -1,50 +1,67 @@
-﻿@model Restaurant_Demo_App.Models.MenuItemModel
+﻿@model Restaurant_Demo_App.Models.MenuItemCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
+<div class="w-[90vw]">
+    <form asp-action="CreateItem">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="category-container flex mb-4 flex-col">
+            <div class="field-container">
+                <label asp-for="@Model.item.Id" class="hidden">@Model.item.Id</label>
+                <input  asp-for="@Model.item.Id" class="menu-item-input hidden" />
+                <span asp-validation-for="@Model.item.Id" class="bg-red-300"></span>
+            </div>
+            <div class="field-container">
+                <label asp-for="@Model.item.Category">@Model.item.Category</label>
+                <select asp-for="@Model.item.Category" class="menu-item-input">
+                    @foreach(string category in Model.categories){
+                        <option>@category</option>
+                    }
+                </select>
+            </div>
+            <div class="field-container">
+                <label asp-for="@Model.item.Name">Name</label>
+                <input asp-for="@Model.item.Name" class="menu-item-input" />
+                <span asp-validation-for="@Model.item.Name" class="bg-red-300"></span>
+            </div>
+            <div class="field-container">
+                <label asp-for="@Model.item.Description">@Model.item.Description</label>
+                <input asp-for="@Model.item.Description" class="menu-item-input" />
+                <span asp-validation-for="@Model.item.Description" class="bg-red-300"></span>
+            </div>
+            <div class="field-container">
+                <label asp-for="@Model.item.Calories">Calories</label>
+                <input asp-for="@Model.item.Calories" class="menu-item-input" />
+                <span asp-validation-for="@Model.item.Calories" class="bg-red-300"></span>
 
-<h1>Create</h1>
-
-<h4>MenuItemModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Calories" class="control-label"></label>
-                <input asp-for="Calories" class="form-control" />
-                <span asp-validation-for="Calories" class="text-danger"></span>
+            <div class="flex flex-row">
+                <div class="flex flex-col w-full">
+                    <label class="mx-auto my-4">
+                        <input class="form-check-input" asp-for="@Model.item.Peanuts" /> @Html.DisplayNameFor(model => model.item.Peanuts)
+                    </label>
+                </div>
+                <div class="flex flex-col w-full">
+                    <label class="mx-auto my-4">
+                        <input class="form-check-input" asp-for="@Model.item.Gluten" /> @Html.DisplayNameFor(model => model.item.Gluten)
+                    </label>
+                </div>
+                <div class="flex flex-col w-full">
+                    <label class="mx-auto my-4">
+                        <input class="form-check-input" asp-for="@Model.item.Vegan" /> @Html.DisplayNameFor(model => model.item.Vegan)
+                    </label>
+                </div>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Peanuts" /> @Html.DisplayNameFor(model => model.Peanuts)
-                </label>
+            <div class="flex flex-row justify-around">
+                <button type="submit" class="btn bg-green-400 hover:bg-green-500">Create Item</button>
+                <a asp-action="Index" class="btn bg-blue-400 hover:bg-blue-500">Return Home</a>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Gluten" /> @Html.DisplayNameFor(model => model.Gluten)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

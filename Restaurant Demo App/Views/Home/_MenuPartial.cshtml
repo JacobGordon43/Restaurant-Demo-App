@@ -34,7 +34,7 @@
                     }
                     </div>
                     <div class="item-col w-full lg:w-[100px]">
-                    @if (@menuItem.Gluten)
+                    @if (!@menuItem.Gluten)
                     {
                         <img class="w-[40px] mx-auto" src="images/glutenfree.png" />
                     }
