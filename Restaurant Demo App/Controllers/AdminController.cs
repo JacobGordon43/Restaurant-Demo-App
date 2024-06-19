@@ -48,6 +48,7 @@ namespace Restaurant_Demo_App.Controllers
             AdminPageModel adminModel = new AdminPageModel(categories, AboutContent);
             return View(adminModel);
         }
+        [Route("Update")]
         public IActionResult UpdateMenu(MenuItemModel item)
         {
             string rootDir = @Directory.GetCurrentDirectory().ToString();
@@ -95,6 +96,7 @@ namespace Restaurant_Demo_App.Controllers
 
             return RedirectToAction("Index");
         }
+        [Route("Delete")]
         public IActionResult DeleteItem(MenuItemModel item)
         {
             string rootDir = @Directory.GetCurrentDirectory().ToString();

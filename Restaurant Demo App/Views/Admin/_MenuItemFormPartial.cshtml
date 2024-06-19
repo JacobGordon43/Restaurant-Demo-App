@@ -51,8 +51,8 @@
             </label>
         </div>
         <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500">Save Item</button>
-        @Html.ActionLink("Delete", "DeleteItem")
-@*         <input type="button" title="Delete" value="D" onclick="location.href='@Url.Action("Delete", "movies", new { id = item.ID })'" /> *@
+        <button asp-action="DeleteItem" class="submit-btn mx-auto bg-red-400 hover:bg-red-500">Delete</button>
+        @*         <input type="button" title="Delete" value="D" onclick="location.href='@Url.Action("Delete", "movies", new { id = item.ID })'" /> *@
 @*         <button type="submit" class="submit-btn mx-auto bg-green-400 hover:bg-green-500" onclick="location.href='@Url.Action("d>Delete Item</button> *@
 
     </div>
