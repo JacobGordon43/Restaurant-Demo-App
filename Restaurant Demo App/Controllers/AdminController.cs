@@ -27,6 +27,15 @@ namespace Restaurant_Demo_App.Controllers
             AdminPageModel adminModel = new AdminPageModel(Menu, AboutContent);
             return View(adminModel);
         }
+
+        [HttpGet("About")]
+        public ActionResult AboutContent()
+        {
+            List<AboutContentModel> AboutContent = new List<AboutContentModel>();
+            AboutContent.Add(new AboutContentModel("<p>Hello</p>"));
+            return View(AboutContent);
+        }
+
         [Route("Update")]
         public IActionResult UpdateMenu(MenuItemModel item)
         {
@@ -68,7 +77,16 @@ namespace Restaurant_Demo_App.Controllers
         }
         public IActionResult CreateItem(MenuItemModel item)
         {
-            Debug.WriteLine(item.Name);
+            if (menuService.CreateItem(item))
+            {
+                TempData["Success"] = "The Menu has been saved successfully!";
+                TempData["Failure"] = null;
+            }
+            else
+            {
+                TempData["Failure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["Success"] = null;
+            }
             return RedirectToAction("Index");
         }
     }

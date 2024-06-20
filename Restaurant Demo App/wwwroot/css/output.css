@@ -608,6 +608,10 @@ video {
   display: flex;
 }
 
+.table {
+  display: table;
+}
+
 .hidden {
   display: none;
 }
@@ -798,6 +802,10 @@ video {
   line-height: 1.75rem;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .no-underline {
   text-decoration-line: none;
 }
@@ -859,6 +867,7 @@ video {
 }
 
 .menu-category {
+  margin-bottom: 20px;
   padding: 20px;
   border-right: 3px solid rgba(178, 178, 178, 1);
   border-bottom: 3px solid rgba(178, 178, 178, 1);

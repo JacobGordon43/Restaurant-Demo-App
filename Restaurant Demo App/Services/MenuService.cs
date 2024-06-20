@@ -175,11 +175,45 @@ namespace Restaurant_Demo_App.Services
             }
             return true;
         }
-
+        /// <summary>
+        /// Creates an item and saves it to the menu
+        /// </summary>
+        /// <param name="item">The item to be saved</param>
+        /// <returns>A boolean value to indicate whether it was successfully saved</returns>
         public bool CreateItem(MenuItemModel item)
         {
-            string id = System.Guid.NewGuid().ToString();
-            item.Id = id;
+            try
+            {
+                string rootDir = @Directory.GetCurrentDirectory().ToString();
+                string filePath = Path.Combine(rootDir, "/root/json/menu.json");
+                string id = System.Guid.NewGuid().ToString();
+                item.Id = id;
+                int count = 0;
+                string menuCategoriesJson = "";
+
+                foreach (MenuCategoryModel category in Menu)
+                {
+                    if (category.Category == item.Category)
+                    {
+                        category.Items.Add(item);
+                    }
+                    string json = JsonConvert.SerializeObject(category);
+                    menuCategoriesJson += category.Category + ":" + json;
+                    if (count < Menu.Count() - 1)
+                    {
+                        menuCategoriesJson += ",";
+                    }
+                    count++;
+                }
+                File.WriteAllText(rootDir + "/wwwroot/json/menu.json", "{'Menu':{" + menuCategoriesJson + "}}");
+                SetMenu();
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+  
             return true;
         }
     }

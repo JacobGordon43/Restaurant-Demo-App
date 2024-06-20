@@ -34,7 +34,11 @@
                 <label asp-for="@Model.item.Calories">Calories</label>
                 <input asp-for="@Model.item.Calories" class="menu-item-input" />
                 <span asp-validation-for="@Model.item.Calories" class="bg-red-300"></span>
-
+            </div>
+            <div class="field-container">
+                <label asp-for="@Model.item.Price">Price</label>
+                <input asp-for="@Model.item.Price" class="menu-item-input" type="number"/>
+                <span asp-validation-for="@Model.item.Price" class="bg-red-300"></span>
             </div>
             <div class="flex flex-row">
                 <div class="flex flex-col w-full">

@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Restaurant_Demo_App.Models.AboutContentModel>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+@foreach (var item in Model) {
+    <form>
+        <div class="field-container">
+            <label asp-for="@item.Content">Content</label>
+                <textarea id="tiny" asp-for="@item.Content" class="menu-item-input">@item.Content</textarea>
+                <span asp-validation-for="@item.Content" class="bg-red-300"></span>
+        </div>
+    </form>
+}
+</table>

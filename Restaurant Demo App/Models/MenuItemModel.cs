@@ -13,7 +13,6 @@ namespace Restaurant_Demo_App.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        [DataType(DataType.Currency)]
         public float Price { get; set; }
         [Required]
         public int Calories { get; set; }
