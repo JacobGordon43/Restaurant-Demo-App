@@ -3,8 +3,10 @@
     public class AboutContentModel
     {
         public string Content { get; set; }
-        public AboutContentModel(String content) {
+        public AboutContentModel(string content) {
             Content = content;
         }
+
+        public AboutContentModel() { }
     }
 }

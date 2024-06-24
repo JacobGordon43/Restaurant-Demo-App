@@ -1,16 +1,18 @@
-﻿@model IEnumerable<Restaurant_Demo_App.Models.AboutContentModel>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-@foreach (var item in Model) {
-    <form>
-        <div class="field-container">
-            <label asp-for="@item.Content">Content</label>
-                <textarea id="tiny" asp-for="@item.Content" class="menu-item-input">@item.Content</textarea>
-                <span asp-validation-for="@item.Content" class="bg-red-300"></span>
-        </div>
-    </form>
+﻿@model Restaurant_Demo_App.Models.AboutContentModel
+@if (TempData["AboutSuccess"] != null)
+{
+    <div class="message-box bg-green-300 mx-auto">@TempData["AboutSuccess"]</div>
 }
-</table>
+else if (TempData["AboutFailure"] != null)
+{
+    <div class="message-box bg-red-300 mx-auto">@TempData["AboutFailure"]</div>
+}
+<form asp-action="UpdateAbout">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="field-container">
+        <label asp-for="Content">Content</label>
+            <textarea asp-for="Content" class="menu-item-input">@Model.Content</textarea>
+            <span asp-validation-for="Content" class="bg-red-300"></span>
+    </div>
+    <button type="submit" class="btn bg-green-400 hover:bg-green-500">Update About Page</button>
+</form>

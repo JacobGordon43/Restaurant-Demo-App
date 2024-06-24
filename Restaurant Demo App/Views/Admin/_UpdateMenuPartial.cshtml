@@ -8,12 +8,12 @@
             </div>
         }
     </div>
-    @if(TempData["Success"] != null)
+    @if(TempData["MenuSuccess"] != null)
     {
-        <div class="message-box bg-green-300 mx-auto">@TempData["Success"]</div>
-    }else if(TempData["Failure"] != null)
+        <div class="message-box bg-green-300 mx-auto">@TempData["MenuSuccess"]</div>
+    }else if(TempData["MenuFailure"] != null)
     {
-        <div class="message-box bg-red-300 mx-auto">@TempData["Failure"]</div>
+        <div class="message-box bg-red-300 mx-auto">@TempData["MenuFailure"]</div>
     }
 
     @foreach (var item in Model)

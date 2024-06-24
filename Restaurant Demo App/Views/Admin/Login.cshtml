@@ -1,0 +1,40 @@
+﻿@model Restaurant_Demo_App.Models.AdminModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<div class="w-[90vw]">
+    @if (TempData["LoginFailure"] != null)
+    {
+        <div class="message-box bg-red-300 mx-auto">@TempData["LoginFailure"]</div>
+    }
+    <form asp-action="LoginAdmin">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="field-container">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="menu-item-input" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="menu-item-input" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="field-container mb-4">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" type="password" class="menu-item-input" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="flex">
+            <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Create</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

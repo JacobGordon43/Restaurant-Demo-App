@@ -2,27 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Restaurant_Demo_App.Models;
+using Restaurant_Demo_App.Services;
 using System.Diagnostics;
 
 namespace Restaurant_Demo_App.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private MenuService menuService = new MenuService();
+        private AboutService aboutService = new AboutService();
         private static List<MenuCategoryModel> Menu;
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public void SetMenuCategories()
-        {
-            if(Menu == null)
-            {
-                List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
-                
-            }
-        }
+        private static AboutContentModel AboutContent;
 
         public IActionResult Index()
         {
@@ -47,38 +37,15 @@ namespace Restaurant_Demo_App.Controllers
                 Debug.WriteLine(ex);
             }
 
-            try
-            {
-                using (StreamReader r = new StreamReader("wwwroot/json/menu.json"))
-                {
-                    string menuCategories = r.ReadToEnd();
-                    JObject menuCategoriesJson = JObject.Parse(menuCategories);
-                    Debug.WriteLine(menuCategoriesJson.ToString());
-                    foreach (JObject menuCategoryJson in menuCategoriesJson["Menu"].Values())
-                    {
-                        Debug.WriteLine(menuCategoriesJson.ToString());
-                        Debug.WriteLine(menuCategoryJson.ToString());
-                        MenuCategoryModel category = JsonConvert.DeserializeObject<MenuCategoryModel>(menuCategoryJson.ToString());
-                        Debug.WriteLine("The category is " + category.Category);
-                        foreach (MenuItemModel item in category.Items)
-                        {
-                            Debug.WriteLine(item.Price);
-                        }
-                        categories.Add(category);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            HomePageModel lists = new HomePageModel(categories, images);
+            Menu = menuService.GetMenu();
+            HomePageModel lists = new HomePageModel(Menu, images);
             return View(lists);
         }
-
-        public IActionResult Privacy()
+        [HttpGet("About")]
+        public IActionResult About()
         {
-            return View();
+            AboutContent = aboutService.GetAboutContent();
+            return View(AboutContent);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -554,6 +554,34 @@ video {
   --tw-contain-style:  ;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 0px) {
+  .container {
+    max-width: 0px;
+  }
+}
+
+@media (min-width: 450px) {
+  .container {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
 .absolute {
   position: absolute;
 }
@@ -804,6 +832,10 @@ video {
 
 .italic {
   font-style: italic;
+}
+
+.underline {
+  text-decoration-line: underline;
 }
 
 .no-underline {

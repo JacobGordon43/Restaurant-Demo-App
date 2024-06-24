@@ -2,9 +2,10 @@
 {
     public class AdminModel
     {
-        private string Name { get; set; }
-        private string Email { get; set; }
-        private string Password { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
 
         public AdminModel(string name, string email, string password)
         {
@@ -12,5 +13,7 @@
             Email = email;
             Password = password;
         }
+
+        public AdminModel() { }
     }
 }

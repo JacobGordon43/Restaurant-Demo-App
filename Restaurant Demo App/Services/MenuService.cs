@@ -33,7 +33,6 @@ namespace Restaurant_Demo_App.Services
                         MenuCategoryModel category = JsonConvert.DeserializeObject<MenuCategoryModel>(menuCategoryJson.ToString());
                         Debug.WriteLine("The category is " + category.Category);
                         categories.Add(category);
-                        Menu = categories;
                     }
                 }
             }
@@ -41,6 +40,7 @@ namespace Restaurant_Demo_App.Services
             {
                 Debug.WriteLine(ex);
             }
+            Menu = categories;
         }
 
         public List<string> GetCategories()
