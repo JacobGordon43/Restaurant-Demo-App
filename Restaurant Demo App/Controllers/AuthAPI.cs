@@ -12,6 +12,6 @@ namespace Restaurant_Demo_App.Controllers
         public IActionResult GetData()
         {
             return Ok();
-        }*/
+        }
     }
 }

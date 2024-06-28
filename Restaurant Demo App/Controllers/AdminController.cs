@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 namespace Restaurant_Demo_App.Controllers
 {
-    [Route("/SecretPath/Admin")]
+    [Route("/Admin")]
     public class AdminController : Controller
     {
         private MenuService menuService = new MenuService();
@@ -64,16 +64,12 @@ namespace Restaurant_Demo_App.Controllers
         [HttpGet("Dashboard")]
         public ActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id"))){
+            if (!adminUser.Authenticated){
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
             }
-            Menu = menuService.GetMenu();
-            
-            List<AboutContentModel> AboutContent = new List<AboutContentModel>();
-
-            AdminPageModel adminModel = new AdminPageModel(Menu, AboutContent);
-            return View(adminModel);
+            InfoModel info = infoService.GetInfo();
+            return View(info);
         }
 
         [HttpGet("About")]
@@ -98,7 +94,7 @@ namespace Restaurant_Demo_App.Controllers
         [Route("UpdateAbout")]
         public IActionResult UpdateAbout(AboutContentModel aboutContent)
         {
-            if (adminUser.Authenticated)
+            if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
@@ -172,7 +168,7 @@ namespace Restaurant_Demo_App.Controllers
         [Route("InsertDish")]
         public IActionResult CreateDish(MenuItemModel item)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
@@ -200,21 +196,22 @@ namespace Restaurant_Demo_App.Controllers
             return View("CreateHours");
         }
         [Route("InsertHours")]
-        public IActionResult CreateHours(MenuItemModel item)
+
+        public IActionResult CreateHours(DayOpenModel hours)
         {
             if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
             }
-            if (menuService.CreateItem(item))
+            if (infoService.AddHours(hours))
             {
-                TempData["MenuSuccess"] = "The Menu has been saved successfully!";
+                TempData["MenuSuccess"] = "The hours has been saved successfully!";
                 TempData["MenuFailure"] = null;
             }
             else
             {
-                TempData["MenuFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["MenuFailure"] = "There has been an issue with updating the hours. You may need to contact the Developer to resolve this issue.";
                 TempData["MenuSuccess"] = null;
             }
             return RedirectToAction("Index");
@@ -222,6 +219,12 @@ namespace Restaurant_Demo_App.Controllers
 
         public IActionResult UpdateInfo(InfoModel info)
         {
+            if (!adminUser.Authenticated)
+            {
+                TempData["LoginFailure"] = "You must login to view that Admin Content";
+                return RedirectToAction("Login");
+            }
+
             if (infoService.UpdateInfo(info))
             {
                 TempData["InfoSuccess"] = "The info has been saved successfully!";

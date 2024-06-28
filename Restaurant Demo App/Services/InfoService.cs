@@ -16,73 +16,115 @@ namespace Restaurant_Demo_App.Services
         /// <summary>
         /// Obtains the Menu and sets it's values
         /// </summary>
-/*        public void SetMenu()
-        {
-            List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
-            try
-            {
-                using (StreamReader r = new StreamReader("wwwroot/json/info.json"))
+        /*        public void SetMenu()
                 {
-                    string menuCategories = r.ReadToEnd();
-                    JObject menuCategoriesJson = JObject.Parse(menuCategories);
-                    Debug.WriteLine(menuCategoriesJson.ToString());
-                    foreach (JObject menuCategoryJson in menuCategoriesJson["Menu"].Values())
+                    List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
+                    try
                     {
-                        Debug.WriteLine(menuCategoriesJson.ToString());
-                        Debug.WriteLine(menuCategoryJson.ToString());
-                        MenuCategoryModel category = JsonConvert.DeserializeObject<MenuCategoryModel>(menuCategoryJson.ToString());
-                        Debug.WriteLine("The category is " + category.Category);
-                        categories.Add(category);
+                        using (StreamReader r = new StreamReader("wwwroot/json/info.json"))
+                        {
+                            string menuCategories = r.ReadToEnd();
+                            JObject menuCategoriesJson = JObject.Parse(menuCategories);
+                            Debug.WriteLine(menuCategoriesJson.ToString());
+                            foreach (JObject menuCategoryJson in menuCategoriesJson["Menu"].Values())
+                            {
+                                Debug.WriteLine(menuCategoriesJson.ToString());
+                                Debug.WriteLine(menuCategoryJson.ToString());
+                                MenuCategoryModel category = JsonConvert.DeserializeObject<MenuCategoryModel>(menuCategoryJson.ToString());
+                                Debug.WriteLine("The category is " + category.Category);
+                                categories.Add(category);
+                            }
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
+                    info = categories;
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            info = categories;
-        }
 
-        public List<string> GetCategories()
-        {
-            List<string> categories = new List<string>();
-            try
-            {
-                using (StreamReader r = new StreamReader("wwwroot/json/info.json"))
+                public List<string> GetCategories()
                 {
-                    string menuCategories = r.ReadToEnd();
-                    JObject menuCategoriesJson = JObject.Parse(menuCategories);
-                    Debug.WriteLine(menuCategoriesJson.ToString());
-                    foreach (JObject menuCategoryJson in menuCategoriesJson["Menu"].Values())
+                    List<string> categories = new List<string>();
+                    try
                     {
-                        categories.Add(menuCategoryJson["Category"].ToString());
+                        using (StreamReader r = new StreamReader("wwwroot/json/info.json"))
+                        {
+                            string menuCategories = r.ReadToEnd();
+                            JObject menuCategoriesJson = JObject.Parse(menuCategories);
+                            Debug.WriteLine(menuCategoriesJson.ToString());
+                            foreach (JObject menuCategoryJson in menuCategoriesJson["Menu"].Values())
+                            {
+                                categories.Add(menuCategoryJson["Category"].ToString());
+                            }
+                        }
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            return categories;
-        }*/
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
+                    return categories;
+                }*/
         /// <summary>
         /// Obtains the Menu, sets it if it hasn't been already
         /// </summary>
         /// <returns>The entire menu, consisting of each category with all of it's items</returns>
-/*        public List<MenuCategoryModel> GetMenu()
-        {
-            if (info == null)
-            {
-                SetInfo();
-            }
-            return info;
-        }*/
+        /*        public List<MenuCategoryModel> GetMenu()
+                {
+                    if (info == null)
+                    {
+                        SetInfo();
+                    }
+                    return info;
+                }*/
         /// <summary>
         /// Updates an item by finding the corresponding category and item ID
         /// </summary>
         /// <param name="item">The Menu Item that is being updating</param>
         /// <returns>A boolean value to indicate whether it was updated or not</returns>
         /// 
+        
+        public InfoModel GetInfo()
+        {
+            if(info != null)
+            {
+                return info;
+            }
+            try
+            {
+                using(StreamReader r = new StreamReader("wwwroot/json/info.json"))
+                {
+                    string file = r.ReadToEnd();
+                    Debug.WriteLine(file);
+                    JObject json = JObject.Parse(file);
+                    info = JsonConvert.DeserializeObject<InfoModel>(json.ToString());
+                }
+                return info;
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return new InfoModel();
+            }
+        }
+        public List<DayOpenModel> GetHours()
+        {
+            try
+            {
+                using (StreamReader r = new StreamReader("/wwwroot/json/info.json"))
+                {
+                    string file = r.ReadToEnd();
+                    JObject json = JObject.Parse(file);
+                    InfoModel info = JsonConvert.DeserializeObject<InfoModel>(json.ToString());
+                    return info.BusinessHours;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return new List<DayOpenModel>();
+            }
+        }
+
         public bool UpdateInfo(InfoModel info)
         {
             string rootDir = @Directory.GetCurrentDirectory().ToString();
@@ -93,7 +135,7 @@ namespace Restaurant_Demo_App.Services
                 info.BusinessHours = [new DayOpenModel("abc", "Monday", false)];
                 string json = JsonConvert.SerializeObject(info);
                 Debug.WriteLine(json);
-                File.WriteAllText(rootDir + "/wwwroot/json/info.json", "{'Info':{" + json + "}}");
+                File.WriteAllText(rootDir + "/wwwroot/json/info.json", "{" + json + "}");
                 return true;
             }catch (Exception ex)
             {
@@ -101,6 +143,20 @@ namespace Restaurant_Demo_App.Services
                 return false;
             }
         }
+
+        public bool AddHours(DayOpenModel hours) 
+        {
+            info.BusinessHours.Add(hours);
+            if (UpdateInfo(info))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 /*        public bool UpdateMenu(MenuItemModel item)
         {
             string rootDir = @Directory.GetCurrentDirectory().ToString();
