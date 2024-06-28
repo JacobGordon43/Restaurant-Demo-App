@@ -135,7 +135,7 @@ namespace Restaurant_Demo_App.Services
                 info.BusinessHours = [new DayOpenModel("abc", "Monday", false)];
                 string json = JsonConvert.SerializeObject(info);
                 Debug.WriteLine(json);
-                File.WriteAllText(rootDir + "/wwwroot/json/info.json", "{" + json + "}");
+                File.WriteAllText(rootDir + "/wwwroot/json/info.json", json);
                 return true;
             }catch (Exception ex)
             {

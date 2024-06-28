@@ -14,10 +14,10 @@ namespace Restaurant_Demo_App.Controllers
     [Route("/Admin")]
     public class AdminController : Controller
     {
-        private MenuService menuService = new MenuService();
-        private AboutService aboutService = new AboutService();
-        private AdminService adminService = new AdminService();
-        private InfoService infoService = new InfoService();
+        private static MenuService menuService = new MenuService();
+        private static AboutService aboutService = new AboutService();
+        private static AdminService adminService = new AdminService();
+        private static InfoService infoService = new InfoService();
         private static List<MenuCategoryModel> Menu;
         private static AboutContentModel AboutContent;
         private readonly IHttpContextAccessor _httpContextAccessor;
