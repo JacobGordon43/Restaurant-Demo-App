@@ -1,6 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Firebase.Auth;
+using FirebaseAdmin.Auth;
+using Google.Apis.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NuGet.Protocol;
+using Refit;
 using Restaurant_Demo_App.Models;
 using System.Diagnostics;
 
@@ -8,38 +13,61 @@ namespace Restaurant_Demo_App.Services
 {
     public class AdminDAO
     {
-        private string API = "https://f9mv86hy5b.execute-api.us-west-1.amazonaws.com/Prod";
+        private const string API_KEY = "AIzaSyDQT_OI6CQKI99q2raph8nKbwG8Mx8uh84";
         private HttpClient client = new HttpClient();
         public AdminDAO() { }
 
-        public async Task<bool> CreateAdmin(AdminModel admin)
+        FirebaseAuthProvider firebaseAuthProvider = new FirebaseAuthProvider(new FirebaseConfig(API_KEY));
+
+  /*      public async Task<bool> CreateAdmin(AdminModel admin)
         {
             bool created = false;
-            JsonContent adminJson = JsonContent.Create(admin);
-            Debug.WriteLine(adminJson.Value);
-            var results = await client.PostAsync(API + "/login", adminJson);
-
-            Debug.WriteLine(await results.Content.ReadAsStringAsync());
-            if(results.StatusCode == System.Net.HttpStatusCode.OK)
+            try
             {
-                created = true;
+                FirebaseAuthLink firebaseAuthLink = await firebaseAuthProvider.CreateUserWithEmailAndPasswordAsync(admin.Email, admin.Password, admin.Name, false);
+                Debug.WriteLine(firebaseAuthLink.FirebaseToken);
+                if(firebaseAuthLink.FirebaseToken != null || firebaseAuthLink.FirebaseToken != "") 
+                {
+                    created = true;
+                }
             }
-
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
             return created;
         }
-
+*/
         public async Task<bool> LoginAdmin(AdminModel admin)
         {
-            bool loggedIn = false;
-            JsonContent adminJson = JsonContent.Create(admin);
-
-            var results = await client.PostAsync(API + "/login", adminJson);
-            if (results.StatusCode == System.Net.HttpStatusCode.OK)
+            bool success = false;
+            try
             {
-                loggedIn = true;
-            }
+                FirebaseAuthLink firebaseAuthLink = await firebaseAuthProvider.SignInWithEmailAndPasswordAsync(admin.Email, admin.Password);
 
-            return loggedIn;
+                FirebaseToken decoded = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(firebaseAuthLink.FirebaseToken);
+                object Id;
+                decoded.Claims.TryGetValue("user_id", out Id);
+                Debug.WriteLine(Id);
+                IDataService dataService = RestService.For<IDataService>("https://localhost:7019/api/GetData");
+
+                await dataService.GetData(firebaseAuthLink.FirebaseToken);
+                if (firebaseAuthLink.FirebaseToken != null || firebaseAuthLink.FirebaseToken != "")
+                {
+                    success = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return success;
         }
     }
+}
+
+public interface IDataService
+{
+    [Get("/")]
+    Task GetData([Authorize("Bearer")] string token);
 }
