@@ -1,3 +1,8 @@
+using FirebaseAdmin;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Restaurant_Demo_App.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,6 +14,10 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddScheme<AuthenticationSchemeOptions, FirebaseAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, (o) => { });
+
+builder.Services.AddSingleton(FirebaseApp.Create());
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(10);

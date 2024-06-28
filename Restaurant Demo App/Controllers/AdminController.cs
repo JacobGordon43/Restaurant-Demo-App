@@ -8,6 +8,7 @@ using System.IO;
 using Humanizer.Localisation.DateToOrdinalWords;
 using Restaurant_Demo_App.Services;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 namespace Restaurant_Demo_App.Controllers
 {
     [Route("/SecretPath/Admin")]
@@ -19,19 +20,38 @@ namespace Restaurant_Demo_App.Controllers
         private static List<MenuCategoryModel> Menu;
         private static AboutContentModel AboutContent;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        //Keeps the Admin persisting
+        private static AdminModel adminUser = adminUser == null ? new AdminModel() : adminUser;
+        public AdminController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
 
         [HttpGet("Login")]
         public ActionResult Login()
         {
             return View();
         }
+
         [Route("LoginAdmin")]
         public async Task<ActionResult> LoginAdmin(AdminModel admin)
         {
-            if(await adminService.LoginAdmin(admin)){
-                HttpContext.Session.SetString("Name", admin.Name);
-                HttpContext.Session.SetString("Id", admin.Id);
-                return View("Index");
+            if (await adminService.LoginAdmin(admin))
+            {
+                _httpContextAccessor.HttpContext.User = UserService.User;
+
+                foreach (ClaimsIdentity user in _httpContextAccessor.HttpContext.User.Identities)
+                {
+                    if (user.IsAuthenticated)
+                    {
+                        adminUser = admin;
+                        adminUser.Authenticated = true;
+                        adminUser.Name = user.FindFirst(ClaimTypes.GivenName).Value;
+                        adminUser.Id = user.FindFirst(ClaimTypes.Sid).Value;
+                    }
+                }
+
+                return RedirectToAction("Index");
             }
             else
             {
@@ -40,30 +60,10 @@ namespace Restaurant_Demo_App.Controllers
             }
         }
 
-        [HttpGet("Signup")]
-        public ActionResult Signup()
-        {
-            return View();
-        }
-
-        [Route("CreateAdmin")]
-        public async Task<IActionResult> CreateAdmin(AdminModel admin)
-        {
-            if (await adminService.CreateAdmin(admin))
-            {
-                return RedirectToAction("Login");
-            }
-            else
-            {
-                TempData["SignupFailure"] = "Your account was unable to be created. This might've been an issue with the server or there is already an admin account made. Please contact your developer if this problem persists.";
-                return RedirectToAction("Signup");
-            }
-        }
-            // GET: AdminController
         [HttpGet("Dashboard")]
         public ActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id"))){
+            if (!adminUser.Authenticated){
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
             }
@@ -78,7 +78,7 @@ namespace Restaurant_Demo_App.Controllers
         [HttpGet("About")]
         public ActionResult AboutContentView()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
@@ -90,12 +90,12 @@ namespace Restaurant_Demo_App.Controllers
         [Route("UpdateAbout")]
         public IActionResult UpdateAbout(AboutContentModel aboutContent)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            if (adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
             }
-            if (aboutService.UpdateAboutContent(aboutContent))
+            if (!aboutService.UpdateAboutContent(aboutContent))
             {
                 TempData["AboutSuccess"] = "The Menu has been saved successfully!";
                 TempData["Aboutailure"] = null;
@@ -110,7 +110,7 @@ namespace Restaurant_Demo_App.Controllers
         [Route("UpdateMenu")]
         public IActionResult UpdateMenu(MenuItemModel item)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
@@ -131,7 +131,7 @@ namespace Restaurant_Demo_App.Controllers
         [Route("Delete")]
         public IActionResult DeleteItem(MenuItemModel item)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
@@ -153,17 +153,17 @@ namespace Restaurant_Demo_App.Controllers
 
         public IActionResult CreateView()
         {
-/*            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
-            }*/
+            }
             MenuItemCreateViewModel model = new MenuItemCreateViewModel();
             return View("Create", model);
         }
         public IActionResult CreateItem(MenuItemModel item)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            if (!adminUser.Authenticated)
             {
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
