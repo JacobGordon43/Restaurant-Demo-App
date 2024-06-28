@@ -16,9 +16,9 @@ namespace Restaurant_Demo_App.Controllers
         private MenuService menuService = new MenuService();
         private AboutService aboutService = new AboutService();
         private AdminService adminService = new AdminService();
+        private InfoService infoService = new InfoService();
         private static List<MenuCategoryModel> Menu;
         private static AboutContentModel AboutContent;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         [HttpGet("Login")]
         public ActionResult Login()
@@ -63,16 +63,13 @@ namespace Restaurant_Demo_App.Controllers
         [HttpGet("Dashboard")]
         public ActionResult Index()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id"))){
-                TempData["LoginFailure"] = "You must login to view that Admin Content";
-                return RedirectToAction("Login");
-            }
-            Menu = menuService.GetMenu();
-            
-            List<AboutContentModel> AboutContent = new List<AboutContentModel>();
+            /*            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id"))){
+                            TempData["LoginFailure"] = "You must login to view that Admin Content";
+                            return RedirectToAction("Login");
+                        }*/
 
-            AdminPageModel adminModel = new AdminPageModel(Menu, AboutContent);
-            return View(adminModel);
+            InfoModel info = new InfoModel();
+            return View(info);
         }
 
         [HttpGet("About")]
@@ -85,6 +82,13 @@ namespace Restaurant_Demo_App.Controllers
             }
             AboutContent = aboutService.GetAboutContent();
             return View("AboutContent", AboutContent);
+        }
+
+        [HttpGet("Menu")]
+        public ActionResult MenuContentView()
+        {
+            Menu = menuService.GetMenu();
+            return View("Menu", Menu);
         }
 
         [Route("UpdateAbout")]
@@ -149,9 +153,9 @@ namespace Restaurant_Demo_App.Controllers
 
             return RedirectToAction("Index");
         }
-        [HttpGet("Create")]
+        [HttpGet("CreateDish")]
 
-        public IActionResult CreateView()
+        public IActionResult CreateDishView()
         {
 /*            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
             {
@@ -159,9 +163,10 @@ namespace Restaurant_Demo_App.Controllers
                 return RedirectToAction("Login");
             }*/
             MenuItemCreateViewModel model = new MenuItemCreateViewModel();
-            return View("Create", model);
+            return View("CreateDish", model);
         }
-        public IActionResult CreateItem(MenuItemModel item)
+        [Route("InsertDish")]
+        public IActionResult CreateDish(MenuItemModel item)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
             {
@@ -177,6 +182,51 @@ namespace Restaurant_Demo_App.Controllers
             {
                 TempData["MenuFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
                 TempData["MenuSuccess"] = null;
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpGet("CreateHours")]
+        public IActionResult CreateHoursView()
+        {
+            /*            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+                        {
+                            TempData["LoginFailure"] = "You must login to view that Admin Content";
+                            return RedirectToAction("Login");
+                        }*/
+            return View("CreateHours");
+        }
+        [Route("InsertHours")]
+        public IActionResult CreateHours(MenuItemModel item)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("Id")))
+            {
+                TempData["LoginFailure"] = "You must login to view that Admin Content";
+                return RedirectToAction("Login");
+            }
+            if (menuService.CreateItem(item))
+            {
+                TempData["MenuSuccess"] = "The Menu has been saved successfully!";
+                TempData["MenuFailure"] = null;
+            }
+            else
+            {
+                TempData["MenuFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["MenuSuccess"] = null;
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult UpdateInfo(InfoModel info)
+        {
+            if (infoService.UpdateInfo(info))
+            {
+                TempData["InfoSuccess"] = "The info has been saved successfully!";
+                TempData["InfoFailure"] = null;
+            }
+            else
+            {
+                TempData["InfoFailure"] = "There has been an issue with updating the info. You may need to contact the Developer to resolve this issue.";
+                TempData["InfoSuccess"] = null;
             }
             return RedirectToAction("Index");
         }

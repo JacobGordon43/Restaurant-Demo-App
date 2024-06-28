@@ -9,6 +9,8 @@
     }
 </div>
 @foreach(var item in Model){
+    int count = 0;
+
     <div id="@item.Category-category" class="menu-container hidden mx-auto">
         <div class="menu-item hidden lg:flex flex-row w-full">
             <div class="item-col w-[100px]">Dish</div>
@@ -21,11 +23,12 @@
         </div>
         @foreach (var menuItem in item.Items)
         //TODO hide all of this and use an active class to display it at 90vw. Use the category as a class to help in setting it to active
-        {    
+        {
+            count++;
             <div class="menu-item flex flex-col lg:flex-row w-full mx-auto">
                 <div class="item-col w-full lg:w-[100px]">@menuItem.Name</div>
-                <div class="item-col w-full lg:w-[600px]">@menuItem.Description</div>
-                <div class="item-col w-full lg:w-[100px]">@menuItem.Calories</div>
+                <div class="item-col w-full">@menuItem.Description</div>
+                <div class="item-col w-full lg:w-[150px]">@menuItem.Calories calories</div>
                 <div class="icons-row flex flex-row">
                     <div class="item-col w-full lg:w-[100px]">
                     @if (@menuItem.Peanuts)
@@ -49,7 +52,10 @@
                 </div>
                 <div class="item-col w-full lg:w-[100px]">$@menuItem.Price</div>
             </div>
-            <hr />
+            if(count <= item.Items.Count() - 1)
+            {
+                <hr class="m-2" />
+            }
         }
     </div>
 }

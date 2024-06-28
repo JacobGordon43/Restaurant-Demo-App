@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Restaurant_Demo_App.Models.MenuCategoryModel>
+
 <div>
     <div class="menu-slider text-center mx-auto">
         @foreach (var item in Model)
@@ -25,7 +26,7 @@
             }
         </div>    
     }
-    <a asp-action="CreateView" class="btn bg-blue-400 hover:bg-blue-500">Create Item</a>
+    <a asp-action="CreateMenuView" class="btn bg-blue-400 hover:bg-blue-500">Create Item</a>
 </div>
     <script>
 
@@ -54,3 +55,9 @@
             $("#" + category + "-category").addClass("active-menu");
         }
     </script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

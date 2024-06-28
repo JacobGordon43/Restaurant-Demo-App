@@ -7,11 +7,11 @@ namespace Restaurant_Demo_App.Controllers
     [ApiController]
     public class AuthAPI : ControllerBase
     {
-        [Authorize]
-        [HttpGet("/")]
-        public IActionResult GetData()
+/*        [Authorize]
+        [HttpGet("/")]*/
+/*        public IActionResult GetData()
         {
             return Ok();
-        }
+        }*/
     }
 }

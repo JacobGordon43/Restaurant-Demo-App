@@ -19,6 +19,7 @@
    <PackageReference Include="HtmlSanitizer" Version="8.0.865" />
    <PackageReference Include="MailKit" Version="4.5.0" />
    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+   <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
  </ItemGroup>
 
   <Target Name="Tailwind" BeforeTargets="Build">

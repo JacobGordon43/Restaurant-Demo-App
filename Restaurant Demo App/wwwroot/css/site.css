@@ -40,7 +40,6 @@
 .item-col {
     padding: 10px;
     text-align: center;
-    border: none;
 }
 .active-menu{
     display: flex;
@@ -206,14 +205,5 @@ transition: .25s ease-in-out;
 }
 
 @media only screen and (min-width: 1024px) {
-    .item-col {
-        border-bottom: 3px solid rgb(187, 187, 187);
-        border-right: 3px solid rgb(187, 187, 187);
-    }
-    .item-col:first-of-type {
-        border-left: 3px solid rgb(187, 187, 187);
-    }
-    .icons-row .item-col:first-of-type{
-        border-left: none;
-    }
+
 }

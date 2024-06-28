@@ -1,0 +1,19 @@
+{
+  'Info': {
+    {
+      "PhoneNumber": "",
+      "BusinessHours": [
+        {
+          "Id": "abc",
+          "Day": "Monday",
+          "OpenTime": null,
+          "CloseTime": null,
+          "IsClosed": false
+        }
+      ],
+      "Instagram": "kjklajf",
+      "Facebook": "dlkjaflksjf",
+      "Twitter": "dklajfklasjf"
+    }
+  }
+}

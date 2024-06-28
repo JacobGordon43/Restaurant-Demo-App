@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Restaurant_Demo_App.Models.MenuCategoryModel>
+
+<div class="content-container">
+    <div>
+        <div class="menu-slider text-center mx-auto">
+            @foreach (var item in Model)
+            {
+                <div class="flex flex-col">
+                    <div class="menu-category text-xl" onclick="selectCategory('@item.Category')">@item.Category</div>
+                </div>
+            }
+        </div>
+        @if (TempData["MenuSuccess"] != null)
+        {
+            <div class="message-box bg-green-300 mx-auto">@TempData["MenuSuccess"]</div>
+        }
+        else if (TempData["MenuFailure"] != null)
+        {
+            <div class="message-box bg-red-300 mx-auto">@TempData["MenuFailure"]</div>
+        }
+
+        @foreach (var item in Model)
+        {
+            <div id="@item.Category-category" class="hidden ">
+                @foreach (var menuItem in item.Items)
+                {
+                    <partial name="_MenuItemFormPartial" model=@menuItem />
+                }
+            </div>
+        }
+        <a asp-action="CreateView" class="btn bg-blue-400 hover:bg-blue-500">Create Item</a>
+    </div>
+</div>
+
+<script>
+
+    if (@Model.Count() > 7) {
+        var desktopSlidesToShow = 7
+    } else {
+        var desktopSlidesToShow = @Model.Count()
+                    }
+    $(".menu-slider").slick({
+        slidesToShow: (@Model.Count()  > 3 ? 3 : @Model.Count()),
+        slidesToScroll: 1,
+        infinite: false,
+        mobileFirst: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: (@Model.Count()  > 5 ? 5 : @Model.Count()),
+                }
+            }
+        ]
+    });
+
+    function selectCategory(category) {
+        $('.active-menu').removeClass("active-menu");
+        $("#" + category + "-category").addClass("active-menu");
+    }
+</script>

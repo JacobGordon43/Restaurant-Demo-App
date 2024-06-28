@@ -1,4 +1,4 @@
-﻿@model Restaurant_Demo_App.Models.AdminPageModel
+﻿@model Restaurant_Demo_App.Models.InfoModel
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
@@ -7,8 +7,39 @@
     <div>Menu</div>
     <div>About</div>
 </div>
+
 <div class="content-container">
-    <partial name="_UpdateMenuPartial" class="w-screen" model=@Model.Menu/>
+    <div>
+        <form>
+            <div class="field-container">
+                <label asp-for=Instagram>Instagram URL</label>
+                <input asp-for="Instagram" value="@Model.Instagram" class="menu-item-input" />
+                <span asp-validation-for="Instagram" class="bg-red-300"></span>
+            </div>
+            <div class="field-container">
+                <label asp-for=Facebook>Facebook URL</label>
+                <input asp-for="Facebook" value="@Model.Facebook" class="menu-item-input" />
+                <span asp-validation-for="Facebook" class="bg-red-300"></span>
+            </div>            <div class="field-container">
+                <label asp-for="Twitter">Instagram URL</label>
+                <input asp-for="Twitter" value="@Model.Twitter" class="menu-item-input" />
+                <span asp-validation-for="Twitter" class="bg-red-300"></span>
+            </div>
+            <button type="submit" asp-action="UpdateInfo" class="btn bg-blue-400 hover:bg-blue-500">Update</button>
+        </form>
+        <partial name="_UpdateBusinessHoursPartial" model=Model.BusinessHours />
+
+        <div class="menu-slider text-center mx-auto">
+        </div>
+        @if (TempData["InfoSuccess"] != null)
+        {
+            <div class="message-box bg-green-300 mx-auto">@TempData["InfoSuccess"]</div>
+        }
+        else if (TempData["MenuFailure"] != null)
+        {
+            <div class="message-box bg-red-300 mx-auto">@TempData["InfoFailure"]</div>
+        }
+    </div>
 </div>
 
 <script>
@@ -17,3 +48,9 @@
         $("#" + category).addClass("active-menu");
     }
 </script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
