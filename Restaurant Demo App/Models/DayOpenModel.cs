@@ -1,4 +1,6 @@
-﻿namespace Restaurant_Demo_App.Models
+﻿using System.Xml.Linq;
+
+namespace Restaurant_Demo_App.Models
 {
     public class DayOpenModel
     {
@@ -24,6 +26,14 @@
             Id = id;
             Day = day;
             IsClosed = isClosed;
+        }
+
+        public void ChangeHours(DayOpenModel hours)
+        {
+            Day = hours.Day;
+            OpenTime = hours.OpenTime;
+            CloseTime = hours.CloseTime;
+            IsClosed = hours.IsClosed;
         }
     }
 

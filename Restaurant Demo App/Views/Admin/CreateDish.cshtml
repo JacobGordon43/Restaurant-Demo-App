@@ -8,11 +8,6 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="category-container flex mb-4 flex-col">
             <div class="field-container">
-                <label asp-for="@Model.item.Id" class="hidden">@Model.item.Id</label>
-                <input  asp-for="@Model.item.Id" class="menu-item-input hidden" />
-                <span asp-validation-for="@Model.item.Id" class="bg-red-300"></span>
-            </div>
-            <div class="field-container">
                 <label asp-for="@Model.item.Category">@Model.item.Category</label>
                 <select asp-for="@Model.item.Category" class="menu-item-input">
                     @foreach(string category in Model.categories){

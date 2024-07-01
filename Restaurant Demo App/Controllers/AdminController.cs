@@ -216,6 +216,26 @@ namespace Restaurant_Demo_App.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Route("UpdateHours")]
+        public IActionResult UpdateHours(DayOpenModel hours)
+        {
+            if (!adminUser.Authenticated)
+            {
+                TempData["LoginFailure"] = "You must login to view that Admin Content";
+                return RedirectToAction("Login");
+            }
+            if (infoService.UpdateHours(hours))
+            {
+                TempData["HoursSuccess"] = "The hours has been saved successfully!";
+                TempData["HoursFailure"] = null;
+            }
+            else
+            {
+                TempData["HoursFailure"] = "There has been an issue with updating the hours. You may need to contact the Developer to resolve this issue.";
+                TempData["HoursSuccess"] = null;
+            }
+            return RedirectToAction("Index");
+        }
 
         public IActionResult UpdateInfo(InfoModel info)
         {

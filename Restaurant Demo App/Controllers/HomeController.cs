@@ -48,6 +48,27 @@ namespace Restaurant_Demo_App.Controllers
             return View(AboutContent);
         }
 
+        public async Task<IActionResult> SendEmail(EmailModel email)
+        {
+            EmailService service = new EmailService();
+            bool success = await service.SendEmail(email);
+
+            if (success)
+            {
+                TempData["EmailSuccess"] = "The email was sent successfully";
+            }
+            else
+            {
+                TempData["EmailFailure"] = "There was an issue sending the email";
+            }
+
+            return RedirectToAction("Contact");
+        }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

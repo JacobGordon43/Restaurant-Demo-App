@@ -132,7 +132,6 @@ namespace Restaurant_Demo_App.Services
 
             try
             {
-                info.BusinessHours = [new DayOpenModel("abc", "Monday", false)];
                 string json = JsonConvert.SerializeObject(info);
                 Debug.WriteLine(json);
                 File.WriteAllText(rootDir + "/wwwroot/json/info.json", json);
@@ -146,6 +145,8 @@ namespace Restaurant_Demo_App.Services
 
         public bool AddHours(DayOpenModel hours) 
         {
+            string id = System.Guid.NewGuid().ToString();
+            hours.Id = id;
             info.BusinessHours.Add(hours);
             if (UpdateInfo(info))
             {
@@ -157,6 +158,23 @@ namespace Restaurant_Demo_App.Services
             }
         }
 
+        public bool UpdateHours(DayOpenModel hours)
+        {
+            bool updated = false;
+
+            foreach(DayOpenModel day in info.BusinessHours)
+            {
+                if(day.Id ==  hours.Id) 
+                {
+                    day.ChangeHours(hours);
+                    if (UpdateInfo(info))
+                    {
+                        updated = true;
+                    }
+                }
+            }
+            return updated;
+        }
 /*        public bool UpdateMenu(MenuItemModel item)
         {
             string rootDir = @Directory.GetCurrentDirectory().ToString();

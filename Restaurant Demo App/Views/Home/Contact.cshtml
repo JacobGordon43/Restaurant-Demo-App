@@ -1,0 +1,44 @@
+﻿@model Restaurant_Demo_App.Models.EmailModel
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="w-[90vw]">
+    @if (TempData["EmailFailure"] != null)
+    {
+        <div class="message-box bg-red-300 mx-auto">@TempData["EmailFailure"]</div>
+    }
+    <form asp-action="LoginAdmin">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="field-container">
+            <label asp-for="EmailAddress" class="control-label"></label>
+            <input asp-for="EmailAddress" class="menu-item-input" />
+            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Subject" class="control-label"></label>
+            <input asp-for="Subject" class="menu-item-input" />
+            <span asp-validation-for="Subject" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="menu-item-input" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="field-container mb-4">
+            <label asp-for="Message" class="control-label"></label>
+            <textarea asp-for="Message"></textarea>
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+        <div class="flex">
+            <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Create</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

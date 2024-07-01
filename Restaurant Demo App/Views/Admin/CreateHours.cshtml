@@ -7,11 +7,6 @@
     <form asp-action="InsertHours">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="category-container flex mb-4 flex-col">
-            <div class="field-container hidden">
-                <label asp-for="Id" class="hidden"></label>
-                <input asp-for="Id" class="menu-item-input hidden" />
-                <span asp-validation-for="Id" class="text-danger hidden"></span>
-            </div>
             <div class="field-container">
                 <label asp-for="Day"></label>
                 <input asp-for="Day" class="menu-item-input" />

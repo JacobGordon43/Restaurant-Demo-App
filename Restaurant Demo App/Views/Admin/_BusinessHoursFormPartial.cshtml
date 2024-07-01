@@ -1,11 +1,11 @@
 ﻿@model Restaurant_Demo_App.Models.DayOpenModel
 
-<form asp-action="InsertHours">
+<form asp-action="UpdateHours">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="category-container flex mb-4 flex-col">
         <div class="field-container hidden">
-            <label asp-for="Id"></label>
-            <input asp-for="Id" class="menu-item-input" />
+            <label asp-for="Id" class="hidden"></label>
+            <input asp-for="Id" class="menu-item-input hidden" />
             <span asp-validation-for="Id" class="text-danger"></span>
         </div>
         <div class="field-container">
@@ -15,17 +15,17 @@
         </div>
         <div class="field-container">
             <label asp-for="OpenTime"></label>
-            <input asp-for="OpenTime" class="menu-item-input" />
+            <input id="OpenTime" asp-for="OpenTime" class="menu-item-input" />
             <span asp-validation-for="OpenTime" class="text-danger"></span>
         </div>
         <div class="field-container">
             <label asp-for="CloseTime" class="control-label"></label>
-            <input asp-for="CloseTime" class="menu-item-input" />
+            <input id="ClosedTime" asp-for="CloseTime" class="menu-item-input" />
             <span asp-validation-for="CloseTime" class="text-danger"></span>
         </div>
         <div class="field-container">
             <label class="mx-auto my-4">
-                <input class="form-check-input" asp-for="IsClosed" /> @Html.DisplayNameFor(model => model.IsClosed)
+                <input id="is-closed" class="form-check-input" asp-for="IsClosed" /> Closed
             </label>
         </div>
 
@@ -36,3 +36,28 @@
     </div>
 </form>
 <hr class="m-2" />
+
+<script>
+    $(document).ready(function () {
+        if ($("#is-closed").is(":checked")) {
+            $("#OpenTime").attr("disabled", true);
+            $("#ClosedTime").attr("disabled", true);
+        }
+        $("#is-closed").click(function () {
+            if ($("#is-closed").is(":checked")) {
+                $("#OpenTime").attr("disabled", true);
+                $("#ClosedTime").attr("disabled", true);
+
+            } else {
+                $("#OpenTime").attr("disabled", false);
+                $("#ClosedTime").attr("disabled", false);
+            }
+        })
+    })
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

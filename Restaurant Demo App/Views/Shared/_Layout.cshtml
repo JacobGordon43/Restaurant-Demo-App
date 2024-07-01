@@ -15,7 +15,7 @@
     <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
     <script>
         tinymce.init({
-            selector: 'textarea',
+            selector: '#rte',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
@@ -54,12 +54,12 @@
                         </a>
                     </li>
                     <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
-                        <a class="nav-link active inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Projects" asp-action="Index">
+                        <a class="nav-link active inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="About">
                             Projects
                         </a>
                     </li>
                     <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
-                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Index">
+                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Contact">
                             Work History
                         </a>
                     </li>

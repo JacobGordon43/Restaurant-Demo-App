@@ -11,7 +11,7 @@ else if (TempData["AboutFailure"] != null)
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="field-container">
         <label asp-for="Content">Content</label>
-            <textarea asp-for="Content" class="menu-item-input">@Model.Content</textarea>
+            <textarea id="rte" asp-for="Content" class="menu-item-input">@Model.Content</textarea>
             <span asp-validation-for="Content" class="bg-red-300"></span>
     </div>
     <button type="submit" class="btn bg-green-400 hover:bg-green-500">Update About Page</button>

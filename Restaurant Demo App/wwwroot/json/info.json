@@ -1,1 +1,1 @@
-{"PhoneNumber":"","BusinessHours":[{"Id":"abc","Day":"Monday","OpenTime":null,"CloseTime":null,"IsClosed":false}],"Instagram":"kjklajfk","Facebook":"dlkjaflksjf","Twitter":"dklajfklasjf"}
+{"PhoneNumber":"","BusinessHours":[{"Id":"abc","Day":"Monday","OpenTime":"10AM","CloseTime":"7PM","IsClosed":false}],"Instagram":"kjklajfk","Facebook":"dlkjaflksjf","Twitter":"dklajfklasjf"}
