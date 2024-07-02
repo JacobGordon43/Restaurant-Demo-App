@@ -18,8 +18,10 @@ namespace Restaurant_Demo_App.Controllers
         private static AboutService aboutService = new AboutService();
         private static AdminService adminService = new AdminService();
         private static InfoService infoService = new InfoService();
+        private static SlideshowService slideshowService = new SlideshowService();
         private static List<MenuCategoryModel> Menu;
         private static AboutContentModel AboutContent;
+        private static List<ImageModel> Slideshow;
         private readonly IHttpContextAccessor _httpContextAccessor;
         //Keeps the Admin persisting
         private static AdminModel adminUser = adminUser == null ? new AdminModel() : adminUser;
@@ -91,6 +93,13 @@ namespace Restaurant_Demo_App.Controllers
             return View("Menu", Menu);
         }
 
+        [HttpGet("Slideshow")]
+        public ActionResult SlideshowContentView()
+        {
+            Slideshow = slideshowService.GetSlideshow();
+            return View("Slideshow", Slideshow);
+        }
+
         [Route("UpdateAbout")]
         public IActionResult UpdateAbout(AboutContentModel aboutContent)
         {
@@ -129,9 +138,28 @@ namespace Restaurant_Demo_App.Controllers
                 TempData["MenuFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
                 TempData["MenuSuccess"] = null;
             }
+            return RedirectToAction("MenuContentView");
+        }
+        [Route("UpdateSlideshow")]
+        public IActionResult UpdateSlideshow(ImageModel image)
+        {
+            if (!adminUser.Authenticated)
+            {
+                TempData["LoginFailure"] = "You must login to view that Admin Content";
+                return RedirectToAction("Login");
+            }
+            if (slideshowService.UpdateSlideshow(image))
+            {
+                TempData["SlideshowSuccess"] = "The Slideshow has been saved successfully!";
+                TempData["SlideshowFailure"] = null;
+            }
+            else
+            {
+                TempData["SlideshowFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["SlideshowSuccess"] = null;
+            }
             return RedirectToAction("Index");
         }
-
         [Route("Delete")]
         public IActionResult DeleteItem(MenuItemModel item)
         {
@@ -206,13 +234,13 @@ namespace Restaurant_Demo_App.Controllers
             }
             if (infoService.AddHours(hours))
             {
-                TempData["MenuSuccess"] = "The hours has been saved successfully!";
-                TempData["MenuFailure"] = null;
+                TempData["HoursSuccess"] = "The hours has been saved successfully!";
+                TempData["HoursFailure"] = null;
             }
             else
             {
-                TempData["MenuFailure"] = "There has been an issue with updating the hours. You may need to contact the Developer to resolve this issue.";
-                TempData["MenuSuccess"] = null;
+                TempData["HoursFailure"] = "There has been an issue with updating the hours. You may need to contact the Developer to resolve this issue.";
+                TempData["HoursSuccess"] = null;
             }
             return RedirectToAction("Index");
         }

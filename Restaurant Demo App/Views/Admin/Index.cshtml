@@ -4,13 +4,28 @@
 }
 
 <div>
-    <div>Menu</div>
-    <div>About</div>
+    <div class="flex flex-col">
+        <a class="menu-category text-xl" href="@Url.Action("MenuContentView", "Admin")">Menu</a>
+    </div>    
+
+    <div class="flex flex-col">
+        <a class="menu-category text-xl" href="@Url.Action("AboutContentView", "Admin")">Menu</a>
+    </div>
 </div>
 
 <div class="content-container">
     <div>
         <form asp-action="UpdateInfo">
+            <div class="field-container">
+                <label asp-for=Address>Address</label>
+                <input asp-for="Address" value="@Model.Address" class="menu-item-input" />
+                <span asp-validation-for="Address" class="bg-red-300"></span>
+            </div>
+            <div class="field-container">
+                <label asp-for=PhoneNumber>Phone Number</label>
+                <input type="tel" asp-for="PhoneNumber" value="@Model.PhoneNumber" class="menu-item-input" />
+                <span asp-validation-for="PhoneNumber" class="bg-red-300"></span>
+            </div>
             <div class="field-container">
                 <label asp-for=Instagram>Instagram URL</label>
                 <input asp-for="Instagram" value="@Model.Instagram" class="menu-item-input" />

@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Restaurant_Demo_App.Models.DayOpenModel>
-
+@{
+    int count = 0;
+}
 @if (TempData["HoursSuccess"] != null)
 {
     <div class="message-box bg-green-300 mx-auto">@TempData["HoursSuccess"]</div>
@@ -9,7 +11,13 @@ else if (TempData["HoursFailure"] != null)
     <div class="message-box bg-red-300 mx-auto">@TempData["HoursFailure"]</div>
 }
 @foreach(var item in Model){
+    count++;
+    <partial name="_BusinessHoursFormPartial" model="@item" />
+    if(count < Model.Count())
+    {
+        <hr class="m-2" />
 
- <partial name="_BusinessHoursFormPartial" model="@item" />
+    }
+
 }
 <a asp-action="CreateHoursView" class="btn bg-blue-400 hover:bg-blue-500">Add Business Hours</a>

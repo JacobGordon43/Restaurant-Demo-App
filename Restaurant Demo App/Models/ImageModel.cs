@@ -2,13 +2,23 @@
 {
     public class ImageModel
     {
+       public string Id { get; set; }
        public string Source { get; set; }
        public string Caption { get; set; }
 
-        public ImageModel(string source, string caption)
+        public ImageModel(string id, string source, string caption)
         {
+            Id = id;
             Source = source;
             Caption = caption;
         }
+        public ImageModel() { }
+
+        public void ChangeData(ImageModel imageModel) 
+        { 
+            Source = imageModel.Source;
+            Caption = imageModel.Caption;
+        }
+
     }
 }

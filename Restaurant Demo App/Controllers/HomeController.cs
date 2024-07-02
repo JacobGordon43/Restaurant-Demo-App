@@ -11,34 +11,28 @@ namespace Restaurant_Demo_App.Controllers
     {
         private MenuService menuService = new MenuService();
         private AboutService aboutService = new AboutService();
+        private InfoService infoService = new InfoService();
+        private SlideshowService slideshowService = new SlideshowService();
         private static List<MenuCategoryModel> Menu;
         private static AboutContentModel AboutContent;
-
+        private static List<ImageModel> Images;
         public IActionResult Index()
         {
-           List<ImageModel> images = new List<ImageModel>();
-           List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
-            try
+            InfoModel info = infoService.GetInfo();
+            string rawPhoneNum = info.PhoneNumber.Replace("-", "");
+            ViewData["phone-col"] = "<a href='tel:'+0" + rawPhoneNum + "'>" + info.PhoneNumber + "</a>";
+            ViewData["address"] = info.Address;
+            ViewData["business-hours"] = "";
+            foreach(DayOpenModel businessHour in info.BusinessHours)
             {
-                using (StreamReader r = new StreamReader("wwwroot/json/slideshow_images.json"))
-                {
-                    string imagesString = r.ReadToEnd();
-                    JObject imagesJson = JObject.Parse(imagesString);
-                    Debug.WriteLine(imagesJson.ToString());
-                    foreach (JObject imageJson in imagesJson.Values()) 
-                    {
-                        ImageModel image = JsonConvert.DeserializeObject<ImageModel>(imageJson.ToString());
-                    images.Add(image);
-                    }
-                }
+                ViewData["business-hours"] += "<div class='hours'>" + businessHour.Day + ":" + (businessHour.IsClosed ? "Closed" : businessHour.OpenTime + " - " + businessHour.CloseTime + "</div> <br/>"); 
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            List<ImageModel> images = new List<ImageModel>();
+            List<MenuCategoryModel> categories = new List<MenuCategoryModel>();
 
+            Images = slideshowService.GetSlideshow();
             Menu = menuService.GetMenu();
-            HomePageModel lists = new HomePageModel(Menu, images);
+            HomePageModel lists = new HomePageModel(Menu, Images);
             return View(lists);
         }
         [HttpGet("About")]
