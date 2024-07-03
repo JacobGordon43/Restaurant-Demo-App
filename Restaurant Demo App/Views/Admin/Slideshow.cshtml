@@ -8,63 +8,7 @@
 
 
 @foreach (var item in Model) {
-    <form asp-action="UpdateSlideshow">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="category-container flex mb-4 flex-col">
-            <div class="field-container">
-                <label asp-for="@item.Id" class="hidden">Id</label>
-                <input asp-for="@item.Id" value="@item.Id" class="menu-item-input hidden" />
-                <span asp-validation-for="@item.Id" class="bg-red-300"></span>
-            </div>
-            <div class="field-container">
-                <label asp-for="@item.Source" class="hidden">Category</label>
-                <input asp-for="Category" value="@Model.Category" class="menu-item-input hidden" />
-                <span asp-validation-for="Category" class="bg-red-300"></span>
-            </div>
-            <div class="field-container">
-                <label asp-for="@item.Source">Name</label>
-                <input asp-for="Name" value="@Model.Name" class="menu-item-input" />
-                <span asp-validation-for="Name" class="bg-red-300"></span>
-            </div>
-            <div class="field-container">
-                <label asp-for="Description">Description</label>
-                <input asp-for="Description" value="@Model.Description" class="menu-item-input" />
-                <span asp-validation-for="Description" class="bg-red-300"></span>
-            </div>
-            <div class="field-container">
-                <label asp-for="Calories">Calories</label>
-                <input asp-for="Calories" value="@Model.Calories" class="menu-item-input" />
-                <span asp-validation-for="Calories" class="bg-red-300"></span>
-
-            </div>
-            <div class="field-container">
-                <label asp-for="Price">Price</label>
-                <input asp-for="Price" value="@Model.Price" class="menu-item-input" />
-                <span asp-validation-for="Price" class="bg-red-300"></span>
-            </div>
-            <div class="flex flex-row">
-                <div class="flex flex-col w-full">
-                    <label class="mx-auto my-4">
-                        <input class="form-check-input" asp-for="Peanuts" /> @Html.DisplayNameFor(model => model.Peanuts)
-                    </label>
-                </div>
-                <div class="flex flex-col w-full">
-                    <label class="mx-auto my-4">
-                        <input class="form-check-input" asp-for="Gluten" /> @Html.DisplayNameFor(model => model.Gluten)
-                    </label>
-                </div>
-                <div class="flex flex-col w-full">
-                    <label class="mx-auto my-4">
-                        <input class="form-check-input" asp-for="Vegan" /> @Html.DisplayNameFor(model => model.Vegan)
-                    </label>
-                </div>
-            </div>
-            <div class="flex flex-row gap-2">
-                <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Save Item</button>
-                <button asp-action="DeleteItem" class="btn mx-auto bg-red-400 hover:bg-red-500">Delete</button>
-            </div>
-        </div>
-    </form>
+    <partial name="_SlideshowFormPartial" model="@item"/>
 }
 <a asp-action="CreateView" class="btn bg-blue-400 hover:bg-blue-500">Create Item</a>
 

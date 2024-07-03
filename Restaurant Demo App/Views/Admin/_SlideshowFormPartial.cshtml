@@ -1,0 +1,27 @@
+﻿@model Restaurant_Demo_App.Models.ImageModel
+
+<form asp-action="UpdateImage">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="category-container flex mb-4 flex-col">
+        <div class="field-container hidden">
+            <label asp-for="Id" class="hidden"></label>
+            <input asp-for="Id" class="menu-item-input hidden" />
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Source"></label>
+            <input type="file" asp-for="Source" class="menu-item-input" />
+            <span asp-validation-for="Source" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Caption"></label>
+            <input id="OpenTime" asp-for="Caption" class="menu-item-input" />
+            <span asp-validation-for="Caption" class="text-danger"></span>
+        </div>
+
+        <div class="flex flex-row gap-2">
+            <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Save Hours</button>
+            <button asp-action="DeleteItem" class="btn mx-auto bg-red-400 hover:bg-red-500">Delete</button>
+        </div>
+    </div>
+</form>
