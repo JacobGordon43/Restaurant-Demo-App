@@ -115,8 +115,8 @@ namespace Restaurant_Demo_App.Controllers
             }
             else
             {
-                TempData["MenuFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
-                TempData["MenuSuccess"] = null;
+                TempData["AboutFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["AboutSuccess"] = null;
             }
             return RedirectToAction("AboutContentView");
         }
