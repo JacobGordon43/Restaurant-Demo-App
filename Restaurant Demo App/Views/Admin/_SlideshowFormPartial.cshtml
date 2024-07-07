@@ -1,7 +1,7 @@
 ﻿@model Restaurant_Demo_App.Models.ImageModel
 
-<div id="@Model.Source.Substring(0, 5)-preview">
-    <img id="@Model.Source.Substring(0, 5)-img" src="../@Model.Source" />
+<div id="@Model.Id.Substring(0, 5)-preview">
+    <img id="@Model.Id.Substring(0, 5)-img" src="../@Model.Source" />
 </div>
 <form asp-action="UpdateImage method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -13,7 +13,7 @@
         </div>
         <div class="field-container">
             <label asp-for="Source"></label>
-            <input id="@Model.Source.Substring(0, 5)-id" type="file" accept="image/*" asp-for="Source" class="menu-item-input" />
+            <input id="@Model.Id.Substring(0, 5)-id" type="file" accept="image/*" asp-for="Source" class="menu-item-input" />
             <span asp-validation-for="Source" class="text-danger"></span>
         </div>
         <div class="field-container">
@@ -33,14 +33,12 @@
     $(document).ready(function(){
         $id = "@Guid.NewGuid().ToString()";
 //        $image = $("<img id=id width='100%' height='100%' />");
-        $image = $("#@Model.Source.Substring(0, 5)-img");
-        $('#@Model.Source.Substring(0, 5)-id').change(function()
+        $('#@Model.Id.Substring(0, 5)-id').change(function()
         {
-            console.log("In first if")
             var files = !!this.files ? this.files : [];
             if (!files.length || !window.FileReader) {
-                $("#@Model.Source.Substring(0, 5)-id").remove();
-                $lbl.appendTo("#@Model.Source.Substring(0, 5)-preview")
+                $("#@Model.Id.Substring(0, 5)-id").remove();
+                $lbl.appendTo("#@Model.Id.Substring(0, 5)-preview")
             }
 
             if(/^image/.test(files[0].type)){
@@ -48,8 +46,10 @@
                 reader.readAsDataURL(files[0]);
                 reader.onloadend = function(){
 //                    $image.appendTo("#@Model.Source.Substring(0, 5)-preview");
-                    $(image).attr("src", this.result)
+                    $("#@Model.Id.Substring(0, 5)-img").attr("src", this.result)
                 }
+//                saveAs(this.result, $id + ".png")
+
             }
         })
     })
