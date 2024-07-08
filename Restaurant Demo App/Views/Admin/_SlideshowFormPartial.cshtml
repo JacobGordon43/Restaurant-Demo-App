@@ -12,9 +12,9 @@
             <span asp-validation-for="Id" class="text-danger"></span>
         </div>
         <div class="field-container">
-            <label asp-for="Source"></label>
-            <input id="@Model.Id.Substring(0, 5)-id" type="file" accept="image/*" asp-for="Source" class="menu-item-input" />
-            <span asp-validation-for="Source" class="text-danger"></span>
+            <label asp-for="UploadedFile"></label>
+            <input id="@Model.Id.Substring(0, 5)-id" type="file" accept="image/*" asp-for="UploadedFile" class="menu-item-input" />
+            <span asp-validation-for="UploadedFile" class="text-danger"></span>
         </div>
         <div class="field-container">
             <label asp-for="Caption"></label>

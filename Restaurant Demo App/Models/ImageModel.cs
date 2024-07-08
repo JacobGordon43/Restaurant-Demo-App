@@ -4,7 +4,8 @@
     {
        public string Id { get; set; }
        public string Source { get; set; }
-       public string Caption { get; set; }
+        public string Caption { get; set; }
+        public IFormFile UploadedFile { get; set; }
 
         public ImageModel(string id, string source, string caption)
         {
