@@ -3,7 +3,7 @@
 <div id="@Model.Id.Substring(0, 5)-preview">
     <img id="@Model.Id.Substring(0, 5)-img" src="../@Model.Source" />
 </div>
-<form asp-action="UpdateImage method="post" enctype="multipart/form-data">
+<form asp-action="UpdateSlideshow" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="category-container flex mb-4 flex-col">
         <div class="field-container hidden">

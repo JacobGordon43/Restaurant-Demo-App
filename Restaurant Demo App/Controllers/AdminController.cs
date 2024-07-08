@@ -148,7 +148,7 @@ namespace Restaurant_Demo_App.Controllers
                 TempData["LoginFailure"] = "You must login to view that Admin Content";
                 return RedirectToAction("Login");
             }
-            if (slideshowService.UpdateSlideshow(image))
+            if (slideshowService.UpdateImage(image))
             {
                 TempData["SlideshowSuccess"] = "The Slideshow has been saved successfully!";
                 TempData["SlideshowFailure"] = null;

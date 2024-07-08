@@ -7,7 +7,7 @@ namespace Restaurant_Demo_App.Services
 {
     public class SlideshowService
     {
-        public List<ImageModel> Slideshow;
+        public static List<ImageModel> Slideshow;
         public SlideshowService() { }
 
         public List<ImageModel> GetSlideshow()
@@ -18,7 +18,24 @@ namespace Restaurant_Demo_App.Services
             }
             return Slideshow;
         }
-
+        public bool UploadImage(ImageModel image)
+        {
+            string rootDir = @Directory.GetCurrentDirectory().ToString();
+            try
+            {
+                string id = Guid.NewGuid().ToString();
+                using (FileStream stream = new FileStream(rootDir + "/wwwroot/images/" + id + ".png", FileMode.Create))
+                {
+                    image.UploadedFile.CopyTo(stream);
+                }
+                image.Source = "/images/" + id + ".png";
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
         public void SetSlideshow()
         {
             try
@@ -27,13 +44,8 @@ namespace Restaurant_Demo_App.Services
                 {
                     Slideshow = new List<ImageModel>();
                     string imagesString = r.ReadToEnd();
-                    JObject imagesJson = JObject.Parse(imagesString);
-                    Debug.WriteLine(imagesJson.ToString());
-                    foreach (JObject imageJson in imagesJson.Values())
-                    {
-                        ImageModel image = JsonConvert.DeserializeObject<ImageModel>(imageJson.ToString());
-                        Slideshow.Add(image);
-                    }
+                    //JObject imagesJson = JObject.Parse(imagesString);
+                    Slideshow = JsonConvert.DeserializeObject<List<ImageModel>>(imagesString);
                 }
             }
             catch (Exception ex)
@@ -45,25 +57,32 @@ namespace Restaurant_Demo_App.Services
         public bool UpdateImage(ImageModel image)
         {
             string rootDir = @Directory.GetCurrentDirectory().ToString();
-            bool updated = false;
             foreach (ImageModel imageModel in Slideshow)
             {
                 if (imageModel.Id == image.Id) 
                 {
-                    imageModel.ChangeData(image);
-                    if(imageModel.Source != image.Source)
+                   
+                    if (image.UploadedFile != null)
                     {
-                        if(File.Exists(rootDir + "/wwwroot/images/" + imageModel.Source))
+                        if (!UploadImage(image))
+                        {
+                            return false;
+                        }
+                    }
+                    //Deletes the original image if the incoming change has a different source.
+                    if (imageModel.Source != image.Source)
+                    {
+                        if (File.Exists(rootDir + "/wwwroot/images/" + imageModel.Source))
                         {
                             File.Delete(rootDir + "/wwwroot/images/" + imageModel.Source);
                         }
                     }
-                    updated = true;
+                    imageModel.ChangeData(image);
                 }
             }
-            return updated;
+            return UpdateSlideshow();
         }
-        public bool UpdateSlideshow(ImageModel image) 
+        public bool UpdateSlideshow() 
         {
             string rootDir = @Directory.GetCurrentDirectory().ToString();
 
@@ -71,7 +90,8 @@ namespace Restaurant_Demo_App.Services
             try
             {
                 string json = JsonConvert.SerializeObject(Slideshow);
-
+                json.Replace("[", "{");
+                json.Replace("]", "}");
                 File.WriteAllText(rootDir + "/wwwroot/json/slideshow_images.json", json);
                 updated = true;
             }catch(Exception ex)
@@ -86,7 +106,7 @@ namespace Restaurant_Demo_App.Services
             string id = System.Guid.NewGuid().ToString();
             image.Id = id;
             Slideshow.Add(image);
-            return UpdateSlideshow(image);
+            return UpdateSlideshow();
         }
     }
 }
