@@ -18,12 +18,12 @@
         </div>
         <div class="field-container">
             <label asp-for="Caption"></label>
-            <input id="OpenTime" asp-for="Caption" class="menu-item-input" />
+            <input asp-for="Caption" class="menu-item-input" />
             <span asp-validation-for="Caption" class="text-danger"></span>
         </div>
 
         <div class="flex flex-row gap-2">
-            <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Save Hours</button>
+            <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Save Image</button>
             <button asp-action="DeleteItem" class="btn mx-auto bg-red-400 hover:bg-red-500">Delete</button>
         </div>
     </div>

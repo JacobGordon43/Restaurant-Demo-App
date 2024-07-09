@@ -99,6 +99,31 @@ namespace Restaurant_Demo_App.Controllers
             Slideshow = slideshowService.GetSlideshow();
             return View("Slideshow", Slideshow);
         }
+        [HttpGet("CreateImage")]
+        public ActionResult CreateImageView()
+        {
+            return View("CreateImage");
+        }
+        [Route("InsertImage")]
+        public IActionResult CreateImage(ImageModel image)
+        {
+            if (!adminUser.Authenticated)
+            {
+                TempData["LoginFailure"] = "You must login to view that Admin Content";
+                return RedirectToAction("Login");
+            }
+            if (slideshowService.AddToSlideshow(image))
+            {
+                TempData["SlideshowSuccess"] = "The Slideshow has been saved successfully!";
+                TempData["SlideshowFailure"] = null;
+            }
+            else
+            {
+                TempData["SlideshowFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["SlideshowSuccess"] = null;
+            }
+            return RedirectToAction("SlideshowContentView");
+        }
 
         [Route("UpdateAbout")]
         public IActionResult UpdateAbout(AboutContentModel aboutContent)
@@ -158,7 +183,7 @@ namespace Restaurant_Demo_App.Controllers
                 TempData["SlideshowFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
                 TempData["SlideshowSuccess"] = null;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("SlideshowContentView");
         }
         [Route("Delete")]
         public IActionResult DeleteItem(MenuItemModel item)
@@ -264,7 +289,7 @@ namespace Restaurant_Demo_App.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [HttpGet("UpdateInfo")]
         public IActionResult UpdateInfo(InfoModel info)
         {
             if (!adminUser.Authenticated)

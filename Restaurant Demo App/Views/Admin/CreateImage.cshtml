@@ -1,0 +1,55 @@
+﻿@model Restaurant_Demo_App.Models.ImageModel
+
+<div id=>
+    <img id="image" src="" />
+</div>
+<form asp-action="CreateImage" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="category-container flex mb-4 flex-col">
+        <div class="field-container hidden">
+            <label asp-for="Id" class="hidden"></label>
+            <input asp-for="Id" class="menu-item-input hidden" />
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="UploadedFile"></label>
+            <input id="file" type="file" accept="image/*" asp-for="UploadedFile" class="menu-item-input" />
+            <span asp-validation-for="UploadedFile" class="text-danger"></span>
+        </div>
+        <div class="field-container">
+            <label asp-for="Caption"></label>
+            <input asp-for="Caption" class="menu-item-input" />
+            <span asp-validation-for="Caption" class="text-danger"></span>
+        </div>
+
+        <div class="flex flex-row gap-2">
+            <button type="submit" class="btn mx-auto bg-green-400 hover:bg-green-500">Save Image</button>
+            <button asp-action="DeleteItem" class="btn mx-auto bg-red-400 hover:bg-red-500">Delete</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $id = "@Guid.NewGuid().ToString()";
+        //        $image = $("<img id=id width='100%' height='100%' />");
+        $('#file').change(function () {
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) {
+                $("#file").remove();
+                $lbl.appendTo("#preview")
+            }
+
+            if (/^image/.test(files[0].type)) {
+                var reader = new FileReader();
+                reader.readAsDataURL(files[0]);
+                reader.onloadend = function () {
+
+                    $("#image").attr("src", this.result)
+                }
+                //                saveAs(this.result, $id + ".png")
+
+            }
+        })
+    })
+</script>
