@@ -148,6 +148,7 @@ namespace Restaurant_Demo_App.Services
             {
                 return false;
             }
+            image.UploadedFile = null;
             Slideshow.Add(image);
             return UpdateSlideshow();
         }

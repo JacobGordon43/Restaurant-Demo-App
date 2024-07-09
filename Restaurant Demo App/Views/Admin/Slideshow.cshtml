@@ -12,7 +12,7 @@
 }
 else if (TempData["MenuFailure"] != null)
 {
-    <div class="message-box bg-red-300 mx-auto">@TempData["MenuFailure"]</div>
+    <div class="message-box bg-red-300 mx-auto">@TempData["SlideshowFailure"]</div>
 }
 @foreach (var item in Model) {
     <partial name="_SlideshowFormPartial" model="@item"/>

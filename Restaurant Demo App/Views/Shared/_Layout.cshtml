@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/output.css" />
@@ -27,7 +28,6 @@
             ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
         });
     </script>
-  @*   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> *@
 </head>
 <body class="bg-slate-100 h-screen">
     <nav id="header" class="navbar border-slate-200 bg-transparent absolute lg:relative w-full z-10 top-0">
@@ -50,25 +50,25 @@
             <div class="transition-all overflow-hidden ease-out duration-500 bg-black right-0 top-0 mix-blend-difference absolute h-0 w-full flex-grow flex-float-right lg:flex lg:items-center lg:h-auto lg:w-auto lg:block lg:mt-0 primary lg:transition-none lg:bg-transparent lg:relative" id="nav-content">
                 <ul class="duration-300 ease-out list-reset lg:flex justify-end flex-1 items-center">
                     <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
-                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Index">
+                        <a id="home" class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Index">
                             Home
                         </a>
                     </li>
-                    <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
+                    <li id="about" class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
                         <a class="nav-link active inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="About">
-                            Projects
+                            About Us
                         </a>
                     </li>
-                    <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
+                    <li id="contact" class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
                         <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Contact">
-                            Work History
+                            Contact Us
                         </a>
                     </li>
-                    <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
+@*                     <li class="nav-item flex-row-reverse mix-blend-difference lg:border-none lg:p-0">
                         <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Contact">
-                            Contact Me
+                            Contact Us
                         </a>
-                    </li>
+                    </li> *@
                 </ul>
             </div>
         </div>
@@ -90,6 +90,7 @@
         </address>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
