@@ -3,7 +3,9 @@
 
 // Write your JavaScript code.
 $(function () {
+    console.log("Document is ready");
     $(document).on("click", "#add-category", function () {
-        console.log($(this).val())
+        console.log("Clicked");
+        $("#category-form").modal("show");
     })
 })

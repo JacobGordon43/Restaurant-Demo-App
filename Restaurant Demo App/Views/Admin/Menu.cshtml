@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Restaurant_Demo_App.Models.MenuCategoryModel>
 
 <div class="content-container">
+    <button id="add-category" class="btn btn-primary" data-toggle="modal" data-target="#category-form">Add Category</button>
     <div>
         <div class="menu-slider text-center mx-auto">
             @foreach (var item in Model)
@@ -61,7 +62,7 @@
 </script>
 
 <!-- Modal -->
-<div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="category-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
