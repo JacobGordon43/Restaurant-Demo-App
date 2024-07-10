@@ -29,7 +29,7 @@
                 }
             </div>
         }
-        <a asp-action="CreateView" class="btn bg-blue-400 hover:bg-blue-500">Create Item</a>
+        <a asp-action="CreateDish" class="btn bg-blue-400 hover:bg-blue-500">Create Item</a>
     </div>
 </div>
 
@@ -67,19 +67,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="close-category-modal" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label for="Category" class="control-label"></label>
-                    <input id="modal-input-id" for="Category" class="form-control" />
+                    <input id="category-input" for="Category" class="form-control" />
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="save-button" type="button" class="btn btn-primary" data-dismiss="modal">Add Category</button>
+                <button id="create-category" type="button" class="btn btn-primary" data-dismiss="modal">Add Category</button>
             </div>
         </div>
     </div>

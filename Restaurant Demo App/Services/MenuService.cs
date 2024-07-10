@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Restaurant_Demo_App.Models;
 using System.Diagnostics;
+using System.Web.WebPages;
 
 namespace Restaurant_Demo_App.Services
 {
@@ -43,6 +44,43 @@ namespace Restaurant_Demo_App.Services
             Menu = categories;
         }
 
+        public bool CreateCategory(MenuCategoryModel newCategory)
+        {
+            string rootDir = @Directory.GetCurrentDirectory().ToString();
+            bool created = false;
+            if (newCategory.Category.IsEmpty())
+            {
+                return created;
+            }
+            newCategory.Items = new List<MenuItemModel>();
+            Menu.Add(newCategory);
+            string menuCategoriesJson = "";
+            int count = 0;
+            try
+            {
+                foreach (MenuCategoryModel category in Menu)
+                {
+
+                    string json = JsonConvert.SerializeObject(category);
+                    menuCategoriesJson += category.Category + ":" + json;
+                    if (count < Menu.Count() - 1)
+                    {
+                        menuCategoriesJson += ",";
+                    }
+                    count++;
+                }
+                File.WriteAllText(rootDir + "/wwwroot/json/menu.json", "{'Menu':{" + menuCategoriesJson + "}}");
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
+            SetMenu();
+
+
+            return created;
+        }
         public List<string> GetCategories()
         {
             List<string> categories = new List<string>();

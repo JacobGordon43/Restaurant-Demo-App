@@ -184,6 +184,27 @@ namespace Restaurant_Demo_App.Controllers
             }
             return RedirectToAction("MenuContentView");
         }
+
+        [Route("CreateCategory")]
+        public IActionResult CreateCategory([FromBody] MenuCategoryModel category)
+        {
+            if (!adminUser.Authenticated)
+            {
+                TempData["LoginFailure"] = "You must login to view that Admin Content";
+                return RedirectToAction("Login");
+            }
+            if (menuService.CreateCategory(category))
+            {
+                TempData["MenuSuccess"] = "The Menu has been saved successfully!";
+                TempData["MenuFailure"] = null;
+            }
+            else
+            {
+                TempData["MenuFailure"] = "There has been an issue with updating the menu. You may need to contact the Developer to resolve this issue.";
+                TempData["MenuSuccess"] = null;
+            }
+            return RedirectToAction("MenuContentView");
+        }
         [Route("UpdateSlideshow")]
         public IActionResult UpdateSlideshow(ImageModel image)
         {
