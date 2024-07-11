@@ -15,14 +15,13 @@
 
         $.ajax({
             type: 'POST',
-            dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(category),
             url: "/Admin/CreateCategory",
-            success: function (data) {
-                console.log(data);
-                $("#category-form").modal("hide");
-            }
+        }).done(function () {
+            console.log("Done");
+            $("#category-form").modal('hide');
+            location.reload();
         })
     })
 })

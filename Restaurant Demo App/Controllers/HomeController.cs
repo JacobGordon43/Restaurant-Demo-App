@@ -1,9 +1,12 @@
+using Firebase.Auth;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Restaurant_Demo_App.Models;
 using Restaurant_Demo_App.Services;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace Restaurant_Demo_App.Controllers
 {
@@ -16,13 +19,36 @@ namespace Restaurant_Demo_App.Controllers
         private static List<MenuCategoryModel> Menu;
         private static AboutContentModel AboutContent;
         private static List<ImageModel> Images;
+        private static AdminModel admin = new AdminModel();
+
+        private void SetAdmin()
+        {
+            if (UserService.User == null)
+            {
+                Debug.WriteLine("No Admin Set");
+            }
+            else
+            {
+                admin.Email = UserService.User.FindFirst(ClaimTypes.Email).Value;
+                admin.Id = UserService.User.FindFirst(ClaimTypes.Sid).Value;
+                admin.Name = UserService.User.FindFirst(ClaimTypes.GivenName).Value;
+                admin.Authenticated = true;
+            }
+        }
+
         public IActionResult Index()
         {
+            if(!admin.Authenticated)
+            {
+                SetAdmin();
+            }
+
             InfoModel info = infoService.GetInfo();
             string rawPhoneNum = info.PhoneNumber.Replace("-", "");
             ViewData["phone-col"] = "<a href='tel:'+0" + rawPhoneNum + "'>" + info.PhoneNumber + "</a>";
             ViewData["address"] = info.Address;
             ViewData["business-hours"] = "";
+            ViewData["admin"] = admin;
             foreach(DayOpenModel businessHour in info.BusinessHours)
             {
                 ViewData["business-hours"] += "<div class='hours'>" + businessHour.Day + ":" + (businessHour.IsClosed ? "Closed" : businessHour.OpenTime + " - " + businessHour.CloseTime + "</div> <br/>"); 
@@ -35,6 +61,7 @@ namespace Restaurant_Demo_App.Controllers
             HomePageModel lists = new HomePageModel(Menu, Images);
             return View(lists);
         }
+        
         [HttpGet("About")]
         public IActionResult About()
         {

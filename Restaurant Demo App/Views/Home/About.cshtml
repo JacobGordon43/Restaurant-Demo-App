@@ -5,3 +5,9 @@
 <div class="container">
     @Html.Raw(Model.Content)
 </div>
+<script>
+    $(document).ready(function () {
+        $(".active").toggleClass(".active");
+        $("#about").toggleClass(".active");
+    })
+</script>

@@ -9,6 +9,7 @@ using Humanizer.Localisation.DateToOrdinalWords;
 using Restaurant_Demo_App.Services;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 namespace Restaurant_Demo_App.Controllers
 {
     [Route("/Admin")]
@@ -62,7 +63,20 @@ namespace Restaurant_Demo_App.Controllers
                 return View("Login");
             }
         }
+/*        [Route("Logout")]
+        public ActionResult LogoutAdmin()
+        {
+            _httpContextAccessor.HttpContext.User = UserService.User;
 
+            foreach (ClaimsIdentity user in _httpContextAccessor.HttpContext.User.Identities)
+            {
+                if (user.IsAuthenticated)
+                {
+                    user.RemoveClaim(IsAuthenticated);
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }*/
         [HttpGet("Dashboard")]
         public ActionResult Index()
         {

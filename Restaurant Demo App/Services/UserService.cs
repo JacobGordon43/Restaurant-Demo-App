@@ -10,6 +10,6 @@ namespace Restaurant_Demo_App.Services
         public void SetUser(IHttpContextAccessor httpContext)
         {
             User = httpContext.HttpContext.User;
-        }
+        } 
     }
 }
