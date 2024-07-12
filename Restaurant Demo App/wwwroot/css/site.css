@@ -66,6 +66,9 @@
     content: '>';
     color: black;
 }
+.nav{
+    background: black;
+}
 .nav-item {
     display: flex;
     padding: 20px;
@@ -128,6 +131,7 @@
 .btn:hover{
     cursor: pointer;
 }
+
 /*Hamburger menu animation styles obtained from https://codepen.io/designcouch/pen/ExvwPY*/
 #menu {
     margin-bottom: 20px;
@@ -205,5 +209,7 @@ transition: .25s ease-in-out;
 }
 
 @media only screen and (min-width: 1024px) {
-
+    .nav{
+        background-color: transparent;
+    }
 }

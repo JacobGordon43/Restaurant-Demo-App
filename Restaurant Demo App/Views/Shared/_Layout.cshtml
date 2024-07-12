@@ -47,7 +47,7 @@
                 </button>
             </div>
 
-            <div class="transition-all overflow-hidden ease-out duration-500 bg-black right-0 top-0 absolute h-0 w-full flex-grow flex-float-right lg:flex lg:items-center lg:h-auto lg:w-auto lg:block lg:mt-0 primary lg:transition-none lg:bg-transparent lg:relative" id="nav-content">
+            <div class="nav transition-all overflow-hidden ease-out duration-500 right-0 top-0 absolute h-0 w-full flex-grow flex-float-right lg:flex lg:items-center lg:h-auto lg:w-auto lg:block lg:mt-0 primary lg:transition-none lg:relative" id="nav-content">
                 @{
                     AdminModel admin = ViewData["admin"] == null ? new AdminModel() : (AdminModel)ViewData["admin"];
                     if (admin.Authenticated)
@@ -62,19 +62,19 @@
                         
                     }
                 }
-                <ul class="duration-300 bg-slate-100 ease-out list-reset lg:flex justify-end flex-1 items-center">
+                <ul class="duration-300 ease-out list-reset lg:flex justify-end flex-1 items-center">
                     <li class="nav-item flex-row-reverse lg:border-none lg:p-0">
                         <a id="home" class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Index">
                             Home
                         </a>
                     </li>
-                    <li id="about" class="nav-item flex-row-reverse lg:border-none lg:p-0">
-                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="About">
+                    <li class="nav-item flex-row-reverse lg:border-none lg:p-0">
+                        <a id="about" class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="About">
                             About Us
                         </a>
                     </li>
-                    <li id="contact" class="nav-item flex-row-reverse lg:border-none lg:p-0">
-                        <a class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Contact">
+                    <li class="nav-item flex-row-reverse lg:border-none lg:p-0">
+                        <a id="contact" class="nav-link inline-block no-underline py-2 px-4 lg:py-3" asp-area="" asp-controller="Home" asp-action="Contact">
                             Contact Us
                         </a>
                     </li>
